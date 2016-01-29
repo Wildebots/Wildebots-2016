@@ -1,10 +1,9 @@
-
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.RobotDrive;
 
 public class Robot extends IterativeRobot {
 	
@@ -40,14 +39,34 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+    	
+    }
+    
+    @Override
+    public void teleopInit() {
+    	
+    }
+    
+    @Override
+    public void testInit() {
+    	RobotDrive drive = new RobotDrive(0, 2, 15, 14);
+    	EventSystem e = EventSystem.getInstance();
+    	Input.getInstance().getButtons().forEach(button -> {
+    		EventSystem.getInstance().addHandler(() -> {
+//    			System.out.println(Input.getInstance().getButtonName(button) + " pressed!");
+    		}, button, HandlerType.WhilePressed);
+    	});
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		System.out.println("Held!");
+//    	}, Input.getInstance().getButtonA(), HandlerType.WhilePressed);
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	
+//    	System.out.println("Left Y: "+Input.getInstance().getLeftY());
+//    	System.out.println("Right Y: "+Input.getInstance().getRightY());
     }
     
 }
