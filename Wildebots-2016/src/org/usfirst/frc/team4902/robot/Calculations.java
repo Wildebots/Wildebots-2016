@@ -26,5 +26,5 @@ public class Calculations {
 				);
 		return Math.toDegrees(angle);
 	}
-
+	
 }
