@@ -7,7 +7,9 @@ public enum PortMap {
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	
 	//TODO: Add real port numbers
-	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3);
+	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
+	
+	Gyro(1);
 	
 	private int port;
 	
