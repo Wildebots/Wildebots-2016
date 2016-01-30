@@ -18,4 +18,9 @@ public class Gyrometer {
 	public double getAngle() {
 		return gyro.getAngle();
 	}
+	
+	public void reset() {
+		gyro.reset();
+	}
+	
 }
