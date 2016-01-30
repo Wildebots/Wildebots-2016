@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.subsystems.Gyrometer;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
@@ -10,6 +12,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	Gyrometer.getInstance().initialize();
     }
     
 	/**
