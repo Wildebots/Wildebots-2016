@@ -14,7 +14,6 @@ public final class Input {
 	
 	private final Joystick stick = new Joystick(PortMap.Joystick.getPort());
 	
-	
 	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
 			B = new JoystickButton(stick, PortMap.ButtonB.getPort()),
 			X = new JoystickButton(stick, PortMap.ButtonX.getPort()),
