@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public final class EventSystem extends Thread {
 	
 	public enum HandlerType {
-		OnPress, WhilePressed;
+		OnPress, OnRelease, WhilePressed;
 	}
 	
 	public class Handler {
@@ -62,12 +62,19 @@ public final class EventSystem extends Thread {
 							}
 						} else if (handler.getType().equals(HandlerType.WhilePressed)) {
 							handler.getRunnable().run();
-						} else {
+						} else if (!handler.getType().equals(HandlerType.OnRelease)) {
 							handler.getRunnable().run();
 						}
 					});
 					pressedMap.put(button, true);
-				} else {
+				} else if (!button.get()) {
+					eventMap.get(button).forEach(handler -> {
+						if (handler.getType().equals(HandlerType.OnRelease)) {
+							if (pressedMap.get(button)) {
+								handler.getRunnable().run();
+							}
+						}
+					});
 					pressedMap.put(button, false);
 				}
 			});

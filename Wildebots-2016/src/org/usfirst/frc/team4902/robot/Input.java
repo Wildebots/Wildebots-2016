@@ -11,11 +11,19 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Handles all driver input. Acess using Input.getInstace()
+ *
+ */
 public final class Input {
 	
 	public enum map {
 		FrontLeftMotor(0), BackLeftMotor(2),
-		FrontRightMotor(15), BackRightMotor(14);
+		FrontRightMotor(15), BackRightMotor(14),
+		
+		Joystick(0),
+		
+		ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4);
 		
 		private int port;
 		
@@ -52,12 +60,13 @@ public final class Input {
 	}
 	
 	
-	private final Joystick stick = new Joystick(0);
+	private final Joystick stick = new Joystick(map.Joystick.getPort());
 	
-	private final JoystickButton A = new JoystickButton(stick, 1),
-			B = new JoystickButton(stick, 2),
-			X = new JoystickButton(stick, 3),
-			Y = new JoystickButton(stick, 4);
+	
+	private final JoystickButton A = new JoystickButton(stick, map.ButtonA.getPort()),
+			B = new JoystickButton(stick, map.ButtonB.getPort()),
+			X = new JoystickButton(stick, map.ButtonX.getPort()),
+			Y = new JoystickButton(stick, map.ButtonY.getPort());
 	
 	private static Input instance = new Input();
 	
