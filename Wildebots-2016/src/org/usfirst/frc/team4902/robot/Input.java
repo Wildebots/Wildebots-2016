@@ -12,31 +12,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public final class Input {
 	
-	public enum map {
-		
-		Joystick(0),
-		
-		ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4);
-		
-		private int port;
-		
-		map(int port) {
-			this.port = port;
-		}
-		
-		public int getPort() {
-			return this.port;
-		}
-		
-	}
-	
-	private final Joystick stick = new Joystick(map.Joystick.getPort());
+	private final Joystick stick = new Joystick(PortMap.Joystick.getPort());
 	
 	
-	private final JoystickButton A = new JoystickButton(stick, map.ButtonA.getPort()),
-			B = new JoystickButton(stick, map.ButtonB.getPort()),
-			X = new JoystickButton(stick, map.ButtonX.getPort()),
-			Y = new JoystickButton(stick, map.ButtonY.getPort());
+	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
+			B = new JoystickButton(stick, PortMap.ButtonB.getPort()),
+			X = new JoystickButton(stick, PortMap.ButtonX.getPort()),
+			Y = new JoystickButton(stick, PortMap.ButtonY.getPort());
 	
 	private static Input instance = new Input();
 	
