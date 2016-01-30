@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -50,6 +51,7 @@ public final class Input {
 		
 	}
 	
+	
 	private final Joystick stick = new Joystick(0);
 	
 	private final JoystickButton A = new JoystickButton(stick, 1),
@@ -67,13 +69,32 @@ public final class Input {
 		return stick;
 	}
 	
-	public double getLeftY() {
+	public double getLeftX(){
 		return stick.getRawAxis(0);
 	}
+	
+	public double getLeftY() {
+		return stick.getRawAxis(1);
+		
+	}
+	
+	public double getRightX() {
+		return stick.getRawAxis(4);
+	}
+
 	
 	public double getRightY() {
 		return stick.getRawAxis(5);
 	}
+	
+	public double getLeftTrigger(){
+		return stick.getRawAxis(2);
+	}
+	
+	public double getRightTrigger(){
+		return stick.getRawAxis(3);
+	}
+	
 
 	public JoystickButton getButtonA() {
 		return A;
