@@ -35,5 +35,9 @@ public class DriveSystem extends Subsystem {
 //			System.out.println("");
 		}
 	}
+	
+	public void rotate(int degrees) {
+		
+	}
 
 }
