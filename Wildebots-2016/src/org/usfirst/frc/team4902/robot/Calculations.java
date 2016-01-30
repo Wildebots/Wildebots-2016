@@ -5,7 +5,7 @@ public class Calculations {
 	// Temporary until actual velocity is decided
 	public static final double BALL_SPEED = 10; // m/s
 	public static final double GRAVITY = 9.81;
-	public static final double HEIGHT = 3;
+	public static final double HEIGHT = 0.6096*0.10;
 
 	/**
 	 * If we have aiming problems later check "Math.pow(BALL_SPEED,2)+"

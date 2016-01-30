@@ -42,7 +42,6 @@ public final class Input {
 	public double getRightX() {
 		return stick.getRawAxis(4);
 	}
-
 	
 	public double getRightY() {
 		return stick.getRawAxis(5);
@@ -55,7 +54,6 @@ public final class Input {
 	public double getRightTrigger(){
 		return stick.getRawAxis(3);
 	}
-	
 
 	public JoystickButton getButtonA() {
 		return A;
