@@ -1,15 +1,10 @@
 package org.usfirst.frc.team4902.robot;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Handles all driver input. Acess using Input.getInstace()
@@ -18,8 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public final class Input {
 	
 	public enum map {
-		FrontLeftMotor(0), BackLeftMotor(2),
-		FrontRightMotor(15), BackRightMotor(14),
 		
 		Joystick(0),
 		
@@ -36,29 +29,6 @@ public final class Input {
 		}
 		
 	}
-	
-	public enum ActionMethod {
-		WhenActive, WhenInactive, WhenPressed, WhenReleased;
-		
-		private Method method;
-		
-		ActionMethod() {
-			try {
-				DriverStation.reportError(this.toString().replace(this.toString().charAt(0), Character.toLowerCase(this.toString().charAt(0))), false);
-				this.method = JoystickButton.class.getMethod(this.toString().replace(this.toString().charAt(0), Character.toLowerCase(this.toString().charAt(0))), Command.class);
-			} catch (NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-				System.out.println("Exception in attaching ActionMethod enums to respective methods");
-				System.out.println("Offending enum: " + this.name());
-			}
-		}
-		
-		public Method getMethod() {
-			return this.method;
-		}
-		
-	}
-	
 	
 	private final Joystick stick = new Joystick(map.Joystick.getPort());
 	
@@ -135,46 +105,6 @@ public final class Input {
 		ArrayList<JoystickButton> buttons = new ArrayList<>();
 		buttons.addAll(Arrays.asList(A,B,X,Y));
 		return buttons;
-	}
-	
-	public void setOn(Runnable r, JoystickButton b, ActionMethod m) {
-		class newCommand extends Command {
-			
-			private Runnable r;
-			
-			private boolean finish = false;
-			
-			public newCommand(Runnable r) {
-				this.r = r;
-			}
-
-			@Override
-			protected void initialize() {}
-
-			@Override
-			protected void execute() {
-				r.run();
-				this.finish = true;
-			}
-
-			@Override
-			protected boolean isFinished() {
-				return this.finish;
-			}
-
-			@Override
-			protected void end() {}
-
-			@Override
-			protected void interrupted() {}
-		}
-		newCommand command = new newCommand(r);
-		try {
-			m.getMethod().invoke(b, command);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-			System.out.println("Exception attaching Runnable to JoystickButton method: " + m.name());
-		}
 	}
 
 }

@@ -89,4 +89,22 @@ public final class EventSystem extends Thread {
 		}
 	}
 	
+	public int getNumHandlers(JoystickButton button) {
+		if (!eventMap.keySet().contains(button)) {
+			System.err.println("Passed EventSystem.getNumHandlers(JoystickButton) an unregistered button!");
+			return 0;
+		} else {
+			return eventMap.get(button).size();
+		}
+	}
+	
+	public void clearHandlers(JoystickButton button) {
+		if (!eventMap.keySet().contains(button)) {
+			System.err.println("Passed EventSystem.clearHandlers(JoystickButton) an unregistered button!");
+			return;
+		} else {
+			eventMap.get(button).clear();
+		}
+	}
+	
 }

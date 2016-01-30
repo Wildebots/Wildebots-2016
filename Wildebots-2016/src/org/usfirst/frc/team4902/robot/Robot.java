@@ -16,6 +16,12 @@ public class Robot extends IterativeRobot {
 		EventSystem.getInstance().addHandler(() -> {
 			System.out.println("A released!");
 		}, Input.getInstance().getButtonA(), HandlerType.OnRelease);
+		EventSystem.getInstance().addHandler(() -> {
+			System.out.println("A pressed!");
+		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+		EventSystem.getInstance().addHandler(() -> {
+			System.out.println("A is held!");
+		}, Input.getInstance().getButtonA(), HandlerType.WhilePressed);
 	}
 
 	/**
