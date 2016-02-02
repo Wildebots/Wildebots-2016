@@ -7,11 +7,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
- * Handles all driver input. Acess using Input.getInstace()
+ * Handles all driver input. Access using Input.getInstance()
  *
  */
 public final class Input {
 	
+	/**
+	 * Joystick object mapped to the port of the xbox controller
+	 */
 	private final Joystick stick = new Joystick(PortMap.Joystick.getPort());
 	
 	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
@@ -25,7 +28,7 @@ public final class Input {
 		return instance;
 	}
 	
-	public Joystick getStick() {
+	public Joystick getjoystick() {
 		return stick;
 	}
 	
@@ -70,6 +73,11 @@ public final class Input {
 		return Y;
 	}
 	
+	/**
+	 * 
+	 * @param button The name of the button in which you wish to inquire the nomenclatural information of.
+	 * @return Name of the button 
+	 */
 	public String getButtonName(JoystickButton button) {
 		String out = null;
 		if (button.equals(A)) out = "A";
@@ -79,7 +87,10 @@ public final class Input {
 		else System.err.println("Unrecognized button passed to Input.getButtonName! Returning null!");
 		return out;
 	}
-	
+	/**
+	 * if for some reason you ever need to get an array list of all the buttons (???) George's got you covered lol
+	 * @return an ArrayList holding all the buttons mapped to the controller
+	 */
 	public ArrayList<JoystickButton> getButtons() {
 		ArrayList<JoystickButton> buttons = new ArrayList<>();
 		buttons.addAll(Arrays.asList(A,B,X,Y));
