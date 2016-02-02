@@ -10,11 +10,13 @@ public class DriveSystem extends Subsystem {
 	
 	private static DriveSystem instance = new DriveSystem();
 	
+	// Attach motors to ports
 	Talon LeftFront = new Talon(PortMap.LeftFrontMotor.getPort()),
 	LeftBack = new Talon(PortMap.LeftBackMotor.getPort()),
 	RightFront = new Talon(PortMap.RightFrontMotor.getPort()),
 	RightBack = new Talon(PortMap.RightBackMotor.getPort());
 	
+	// Attach motors to drive train
 	private RobotDrive drive = new RobotDrive(LeftFront, LeftBack, RightFront, RightBack);
 
 	public static DriveSystem getInstance() {
@@ -40,11 +42,21 @@ public class DriveSystem extends Subsystem {
 		drive.tankDrive(left, right);
 	}
 	
+	/**
+	 * Rotates the robot on the place
+	 * @param degrees (negative for clockwise, positive for counterclockwise)
+	 */
 	public void rotate(int degrees) {
 		Thread RotateThread = new Thread(() -> {
 			double angle = Gyrometer.getInstance().getAngle();
-			while (Gyrometer.getInstance().getAngle() < angle+degrees) {
-				this.tankDrive(1, -1);
+			if (degrees<0)
+				while (Gyrometer.getInstance().getAngle() < angle+degrees) {
+					this.tankDrive(-0.5, 0.5);
+				}
+			else{
+				while (Gyrometer.getInstance().getAngle()> angle+degrees){
+					this.tankDrive(0.5,-0.5);
+				}
 			}
 		});
 		RotateThread.setDaemon(true);
