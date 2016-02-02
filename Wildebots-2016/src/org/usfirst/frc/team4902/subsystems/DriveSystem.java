@@ -27,7 +27,7 @@ public class DriveSystem extends Subsystem {
 		double leftY = Input.getInstance().getLeftY(), rightY = Input.getInstance().getRightY();
 		if (leftY < -threshold || leftY > threshold) {
 			if (rightY < -threshold || rightY > threshold) {
-				drive.tankDrive(leftY, rightY);
+				this.tankDrive(leftY, rightY);
 			} else {
 //				System.out.println("");
 			}
@@ -36,8 +36,19 @@ public class DriveSystem extends Subsystem {
 		}
 	}
 	
+	private synchronized void tankDrive(double left, double right) {
+		drive.tankDrive(left, right);
+	}
+	
 	public void rotate(int degrees) {
-		
+		Thread RotateThread = new Thread(() -> {
+			double angle = Gyrometer.getInstance().getAngle();
+			while (Gyrometer.getInstance().getAngle() < angle+degrees) {
+				this.tankDrive(1, -1);
+			}
+		});
+		RotateThread.setDaemon(true);
+		RotateThread.start();
 	}
 
 }
