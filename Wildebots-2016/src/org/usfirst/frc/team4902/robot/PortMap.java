@@ -6,6 +6,7 @@ public enum PortMap {
 	
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	
+	// TODO: Add real port numbers
 	LeftDriveEncoderA(9),
 	LeftDriveEncoderB(9),
 	
