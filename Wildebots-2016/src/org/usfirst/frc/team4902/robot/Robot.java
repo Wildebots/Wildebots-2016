@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -46,7 +47,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	
+    	DriveSystem.getInstance().execute();
     }
     
 }
