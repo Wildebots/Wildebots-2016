@@ -25,7 +25,7 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		System.out.println("Execute");
+//		System.out.println("Execute");
 		double threshold = 0.18;
 		double leftY = Input.getInstance().getLeftY(), rightY = Input.getInstance().getRightY();
 
@@ -51,6 +51,12 @@ public class DriveSystem extends Subsystem {
 
 	private synchronized void tankDrive(double left, double right) {
 		drive.tankDrive(left, right);
+		log();
+	}
+	
+
+	public void log(){
+		
 	}
 
 	/**
@@ -72,6 +78,15 @@ public class DriveSystem extends Subsystem {
 		});
 		RotateThread.setDaemon(true);
 		RotateThread.start();
+	}
+	
+	public Talon getTalon(int index) {
+		System.out.println(LeftFront == null);
+		if (index == 0) {
+			return LeftFront;
+		} else {
+			return null;
+		}
 	}
 
 }

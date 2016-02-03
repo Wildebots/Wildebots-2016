@@ -5,6 +5,7 @@ import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot {
 	
@@ -40,13 +41,24 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+    	DriveSystem.getInstance().execute();
+    }
+    
+    @Override
+    public void testInit() {
+    	
+    }
+    
+    @Override
+    public void disabledInit() {
+    	
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
+    	LiveWindow.run();
     	DriveSystem.getInstance().execute();
     }
     
