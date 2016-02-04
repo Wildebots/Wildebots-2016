@@ -1,12 +1,13 @@
 
 package org.usfirst.frc.team4902.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.util.AllocationException;
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot{
 	
 	DigitalOutput sanicOut;
 	DigitalInput sanicIn;
@@ -15,10 +16,11 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
+    public void robotInit() throws AllocationException{
     	
-    	DigitalOutput sanicOut = new DigitalOutput(2);
-    	DigitalInput sanicIn = new DigitalInput(2);
+    	
+    	sanicOut = new DigitalOutput(2);
+    	sanicIn = new DigitalInput(2);
     }
     
 	/**
@@ -44,11 +46,12 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
+    public void teleopPeriodic() throws AllocationException{
     	
     	sanicOut.set(true);
     	Timer.delay(0.000005);
     	sanicOut.set(false);
+    	
     	
     	long startTime = 0;
     	long duration = 0;
@@ -57,7 +60,7 @@ public class Robot extends IterativeRobot {
     	while(running){
     		if(sanicIn.get() && !started){
     			startTime = System.nanoTime();
-    			started = false;
+    			started = true;
     		}
     		if(!sanicIn.get() && started){
     			duration = System.nanoTime()-startTime;
@@ -65,6 +68,7 @@ public class Robot extends IterativeRobot {
     		}
     		
     	}
+    	
     	
     	System.out.println(duration);
         
