@@ -7,6 +7,7 @@ public class Encoders {
 	
 	private static Encoders instance = new Encoders();
 	
+	//Initializes encoders
 	private Encoder leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort()),
 			rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort()),
 			shooterEncoder  = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
