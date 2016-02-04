@@ -7,18 +7,20 @@ public class Encoders {
 	
 	private static Encoders instance = new Encoders();
 	
-	private Encoder leftDriveEncoder, rightDriveEncoder, shooterEncoder;
+	private Encoder leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort()),
+			rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort()),
+			shooterEncoder  = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
 	
 	public static Encoders getInstance() {
 		return instance;
 	}
 	
-	public void initialize() {
-		leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort());
-		rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort());
-		
-		shooterEncoder = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
-	}
+//	public void initialize() {
+//		leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort());
+//		rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort());
+//		
+//		shooterEncoder = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
+//	}
 	
 	public void resetDriveEncoders() {
 		leftDriveEncoder.reset();
