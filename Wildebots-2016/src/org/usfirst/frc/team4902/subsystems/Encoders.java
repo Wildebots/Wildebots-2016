@@ -23,31 +23,52 @@ public class Encoders {
 //		shooterEncoder = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
 //	}
 	
+	/**
+	 * Resets left and right drive wheel encoders
+	 */
 	public void resetDriveEncoders() {
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 	}
 	
+	/**
+	 * Resets the shooter encoder
+	 */
 	public void resetShooterEncoder() {
 		shooterEncoder.reset();
 	}
 	
+	/**
+	 * @return Left drive wheel encoder count
+	 */
 	public int getLeftDriveCount() {
 		return leftDriveEncoder.get();
 	}
 	
+	/**
+	 * @return Right drive wheel encoder count
+	 */
 	public int getRightDriveCount() {
 		return rightDriveEncoder.get();
 	}
 	
+	/**
+	 * @return Left drive wheel encoder distance
+	 */
 	public double getLeftDriveDistance() {
 		return leftDriveEncoder.getDistance();
 	}
 	
+	/**
+	 * @return Right drive wheel encoder distance
+	 */
 	public double getRightDriveDistance() {
 		return rightDriveEncoder.getDistance();
 	}
 	
+	/**
+	 * @return Shooter encoder count
+	 */
 	public int getShooterCount() {
 		return shooterEncoder.get();
 	}
