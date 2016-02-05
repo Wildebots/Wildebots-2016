@@ -36,7 +36,7 @@ public class DriveSystem extends Subsystem {
 			rightY = 0;
 		}
 
-		tankDrive(leftY,rightY);
+		drive.tankDrive(-leftY, -rightY);
 		
 		//		if (leftY < -threshold || leftY > threshold) {
 //			if (rightY < -threshold || rightY > threshold) {
@@ -49,11 +49,23 @@ public class DriveSystem extends Subsystem {
 //		}
 	}
 
-	private synchronized void tankDrive(double left, double right) {
+	public synchronized void tankDrive(double left, double right) {
 		drive.tankDrive(left, right);
-		log();
 	}
 	
+	public void setLeft(double speed) {
+		LeftFront.set(speed);
+		LeftBack.set(speed);
+	}
+	
+	public void setBack(double speed) {
+		RightFront.set(speed);
+		RightBack.set(speed);
+	}
+	
+	public void setSpeed(double speed) {
+		drive.tankDrive(speed, speed);
+	}
 
 	public void log(){
 		
