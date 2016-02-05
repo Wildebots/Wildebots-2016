@@ -9,20 +9,10 @@ public class Gyrometer {
 
 	private static Gyrometer instance = new Gyrometer();
 
-	private Gyro gyro;
-
-	private boolean init = false;
+	private Gyro gyro = new AnalogGyro(PortMap.Gyro.getPort());
 	
 	public static Gyrometer getInstance() {
 		return instance;
-	}
-	
-	public void initialize() {
-		if (!init) {
-			init = true;
-			gyro = new AnalogGyro(PortMap.Gyro.getPort());
-			gyro.reset();
-		}
 	}
 
 	// Returns angle between 0 and 360 degrees relative to calibrated angle

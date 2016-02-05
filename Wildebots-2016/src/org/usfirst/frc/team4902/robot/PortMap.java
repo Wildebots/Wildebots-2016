@@ -9,7 +9,7 @@ public enum PortMap {
 	//TODO: Add real port numbers
 	LeftFrontMotor(2), LeftBackMotor(3), RightFrontMotor(0), RightBackMotor(1),
 	
-	Gyro(1);
+	Gyro(0);
 	
 	private int port;
 	

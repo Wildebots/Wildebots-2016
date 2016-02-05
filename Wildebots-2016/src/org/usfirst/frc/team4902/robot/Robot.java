@@ -1,18 +1,25 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
+import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
+	
+	Encoder encoder = new Encoder(0,1);
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-
+		EventSystem.getInstance().addHandler(() -> {
+			Gyrometer.getInstance().reset();
+		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
 	}
 
 	/**
@@ -39,11 +46,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		if (this.isAutonomous()) {
-
-		} else if (this.isOperatorControl()) {
-			DriveSystem.getInstance().execute();
-		}
+		DriveSystem.getInstance().execute();
 	}
 
 
@@ -62,7 +65,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		
+//		System.out.println("Encoder: "+encoder.getRaw());
+		System.out.println("Angle: "+Gyrometer.getInstance().getAngle());
 	}
 
 }
