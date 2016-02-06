@@ -5,10 +5,17 @@ import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SPI.Port;
 
 public class Robot extends IterativeRobot {
+	
+//	SPI gyro = new SPI(Port.kOnboardCS0);
+		
+	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	Encoder encoder = new Encoder(0,1);
 
@@ -18,7 +25,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		EventSystem.getInstance().addHandler(() -> {
-			Gyrometer.getInstance().reset();
+			gyro.calibrate();
+			gyro.reset();
 		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
 	}
 
@@ -53,7 +61,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testInit() {
-
+		gyro.reset();
 	}
 
 	@Override
@@ -66,7 +74,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 //		System.out.println("Encoder: "+encoder.getRaw());
-		System.out.println("Angle: "+Gyrometer.getInstance().getAngle());
+//		System.out.println("Angle: "+Gyrometer.getInstance().getAngle());
+//		DriveSystem.getInstance().execute();
+		System.out.println(gyro.getAngle());
 	}
 
 }
