@@ -105,15 +105,5 @@ public class DriveSystem extends Subsystem {
 		drive.tankDrive(speed + Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT, speed - Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT);
 		
 	}
-	
-	
-	public Talon getTalon(int index) {
-		System.out.println(LeftFront == null);
-		if (index == 0) {
-			return LeftFront;
-		} else {
-			return null;
-		}
-	}
 
 }
