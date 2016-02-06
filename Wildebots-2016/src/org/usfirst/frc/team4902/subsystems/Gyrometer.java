@@ -17,7 +17,7 @@ public class Gyrometer {
 
 	// Returns angle between 0 and 360 degrees relative to calibrated angle
 	public double getAngle() {
-		return gyro.getAngle();
+		return -gyro.getAngle();
 	}
 
 	public void reset() {
