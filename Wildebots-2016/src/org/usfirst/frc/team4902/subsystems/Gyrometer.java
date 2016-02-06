@@ -2,15 +2,15 @@ package org.usfirst.frc.team4902.subsystems;
 
 import org.usfirst.frc.team4902.robot.PortMap;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+
 
 public class Gyrometer {
 	
-	private Gyro gyro;
+	private ADXRS450_Gyro gyro;
 	
 	public Gyrometer() {
-		gyro = new AnalogGyro(PortMap.Gyro.getPort());
+		gyro = new ADXRS450_Gyro();
 		gyro.reset();
 	}
 	
@@ -19,7 +19,7 @@ public class Gyrometer {
 		return gyro.getAngle();
 	}
 	
-	public void reset() {
+	public void calibrate() {
 		gyro.reset();
 	}
 	
