@@ -3,19 +3,14 @@ package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
-import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
 	
-//	SPI gyro = new SPI(Port.kOnboardCS0);
-		
-	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	Talon motor = new Talon(0);
 	
 	Encoder encoder = new Encoder(0,1);
 
@@ -25,8 +20,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		EventSystem.getInstance().addHandler(() -> {
-			gyro.calibrate();
-			gyro.reset();
 		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
 	}
 
@@ -61,22 +54,52 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testInit() {
-		gyro.reset();
+		EventSystem.getInstance().addHandler(() -> {
+			System.out.println("Set target!");
+			target = newTarget;
+		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+		EventSystem.getInstance().addHandler(() -> {
+			System.out.println("Encoder reset!");
+			encoder.reset();
+		}, Input.getInstance().getButtonB(), HandlerType.OnPress);
+		encoder.reset();
 	}
 
 	@Override
 	public void disabledInit() {
 
 	}
+	
+	double newTarget = 0;
+	
+	double target = 0;
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-//		System.out.println("Encoder: "+encoder.getRaw());
-//		System.out.println("Angle: "+Gyrometer.getInstance().getAngle());
-//		DriveSystem.getInstance().execute();
-		System.out.println(gyro.getAngle());
+		motor.set(Input.getInstance().getRightY());
+		System.out.println(encoder.get());
+//		double change = Input.getInstance().getRightY()*0.05;
+//		if (change > 0) {
+//			System.out.println(change);
+//			newTarget += change;
+//			System.out.println("NewTarget: "+newTarget);
+//		}
+//		this.execute();
+	}
+	
+	public void reset() {
+		
+	}
+	
+	public void execute() {
+		double remain = target-getRotations(encoder.get());
+		motor.set(remain/target);
+	}
+	
+	public double getRotations(int count) {
+		return count/360.0;
 	}
 
 }
