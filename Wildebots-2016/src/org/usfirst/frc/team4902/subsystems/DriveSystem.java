@@ -19,6 +19,13 @@ public class DriveSystem extends Subsystem {
 	// Attach motors to drive train
 	private RobotDrive drive = new RobotDrive(LeftFront, LeftBack, RightFront, RightBack);
 
+	/**
+	 * A constant to tweak how quickly the robot will adjust back to straight.
+	 */
+	private final double ADJUSTMENT_SPEED_CONSTANT = 0.04;
+	
+	
+	
 	public static DriveSystem getInstance() {
 		return instance;
 	}
@@ -91,6 +98,14 @@ public class DriveSystem extends Subsystem {
 		RotateThread.setDaemon(true);
 		RotateThread.start();
 	}
+	
+	public void driveStraight(double speed, double targetAngle){
+		
+		double angle = Gyrometer.getInstance().getAngle() - targetAngle;
+		drive.tankDrive(speed + Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT, speed - Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT);
+		
+	}
+	
 	
 	public Talon getTalon(int index) {
 		System.out.println(LeftFront == null);
