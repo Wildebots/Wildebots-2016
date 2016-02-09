@@ -54,10 +54,6 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	double newTarget = 0;
-
-	double target = 0;
-
 	/**
 	 * This function is called periodically during test mode
 	 */
