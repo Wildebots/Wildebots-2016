@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
@@ -40,11 +41,18 @@ public class Robot extends IterativeRobot {
         
     }
     
+    Encoder encoder = new Encoder(0, 1);
+    
+    @Override
+    public void testInit() {
+    	encoder.reset();
+    }
+    
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	
+    	System.out.println(encoder.get());
     }
     
 }
