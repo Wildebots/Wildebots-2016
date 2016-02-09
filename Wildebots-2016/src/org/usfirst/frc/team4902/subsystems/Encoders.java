@@ -77,7 +77,19 @@ public class Encoders {
 	 * Gets angle
 	 * @return Angle
 	 */
-	public int getShooterAngle() {
+	public double getShooterAngle() {
 		return (shooterEncoder.get()/497)*360;
+	}
+	
+	public Encoder getShooterEncoder(){
+		return shooterEncoder;
+	}
+	
+	public Encoder getLeftDriveEncoder(){
+		return leftDriveEncoder;
+	}
+	
+	public Encoder getRightDriveEncoder(){
+		return rightDriveEncoder;
 	}
 }
