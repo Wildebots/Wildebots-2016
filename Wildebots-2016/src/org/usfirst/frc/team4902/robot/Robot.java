@@ -1,26 +1,19 @@
 
 package org.usfirst.frc.team4902.robot;
 
-import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
+import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
-	
-	Talon motor = new Talon(0);
-	
-	Encoder encoder = new Encoder(0,1);
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		EventSystem.getInstance().addHandler(() -> {
-		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+		
 	}
 
 	/**
@@ -33,14 +26,15 @@ public class Robot extends IterativeRobot {
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-
+		Gyrometer.getInstance().reset();
+		Gyrometer.getInstance().calibrate();
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		DriveSystem.getInstance().driveStraight(0.6);
 	}
 
 	/**
@@ -50,56 +44,25 @@ public class Robot extends IterativeRobot {
 		DriveSystem.getInstance().execute();
 	}
 
-
-
 	@Override
 	public void testInit() {
-		EventSystem.getInstance().addHandler(() -> {
-			System.out.println("Set target!");
-			target = newTarget;
-		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
-		EventSystem.getInstance().addHandler(() -> {
-			System.out.println("Encoder reset!");
-			encoder.reset();
-		}, Input.getInstance().getButtonB(), HandlerType.OnPress);
-		encoder.reset();
+		
 	}
 
 	@Override
 	public void disabledInit() {
 
 	}
-	
+
 	double newTarget = 0;
-	
+
 	double target = 0;
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		motor.set(Input.getInstance().getRightY());
-		System.out.println(encoder.get());
-//		double change = Input.getInstance().getRightY()*0.05;
-//		if (change > 0) {
-//			System.out.println(change);
-//			newTarget += change;
-//			System.out.println("NewTarget: "+newTarget);
-//		}
-//		this.execute();
-	}
-	
-	public void reset() {
 		
-	}
-	
-	public void execute() {
-		double remain = target-getRotations(encoder.get());
-		motor.set(remain/target);
-	}
-	
-	public double getRotations(int count) {
-		return count/360.0;
 	}
 
 }
