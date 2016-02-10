@@ -22,7 +22,7 @@ public class DriveSystem extends Subsystem {
 	/**
 	 * A constant to tweak how quickly the robot will adjust back to straight.
 	 */
-	private final double ADJUSTMENT_SPEED_CONSTANT = 0.6;
+	private final double ADJUSTMENT_SPEED_CONSTANT = 0.8;
 	
 	
 	

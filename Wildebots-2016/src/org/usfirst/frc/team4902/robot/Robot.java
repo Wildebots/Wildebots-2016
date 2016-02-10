@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import java.time.Duration;
+
+import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Gyrometer;
 
@@ -8,12 +11,24 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 
+	volatile boolean driveStraight = false;
+	
+	double straight_speed = 0.3;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		
+		EventSystem.getInstance().addHandler(() -> {
+			if (this.isDisabled()) return;
+			DriveSystem.getInstance().rotate(90);
+		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+		EventSystem.getInstance().addHandler(() -> {
+			if (this.isDisabled()) return;
+			driveStraight = !driveStraight;
+			System.out.println("Drive Straight: "+driveStraight);
+		}, Input.getInstance().getButtonB(), HandlerType.OnPress);
 	}
 
 	/**
@@ -34,31 +49,40 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		DriveSystem.getInstance().driveStraight(0.6);
+		DriveSystem.getInstance().driveStraight(0.3);
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		DriveSystem.getInstance().execute();
+		if (!driveStraight) {
+			DriveSystem.getInstance().execute();
+		} else {
+			straight_speed += Input.getInstance().getRightYThreshold();
+			DriveSystem.getInstance().driveStraight(straight_speed);
+		}
 	}
 
 	@Override
 	public void testInit() {
-		
+
 	}
 
 	@Override
 	public void disabledInit() {
-
+//		DriveSystem.getInstance().setSpeed(-0.3);
+//		MasterTimer.getInstance().schedule(() -> {
+//			DriveSystem.getInstance().setSpeed(0);
+//		}, Duration.ofMillis(500));
+		driveStraight = false;
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		
+
 	}
 
 }
