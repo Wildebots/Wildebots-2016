@@ -4,7 +4,9 @@ public enum PortMap {
 	
 	Joystick(0),
 	
-	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4);
+	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
+	
+	UltrasonicForward(2), UltrasonicSide(3);
 	
 	private int port;
 	
