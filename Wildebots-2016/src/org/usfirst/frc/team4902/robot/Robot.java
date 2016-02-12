@@ -4,16 +4,24 @@ package org.usfirst.frc.team4902.robot;
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
+	
+	private static Robot instance;
+	
+	public static Robot getInstance() {
+		return instance;
+	}
 	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	instance = this;
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().execute();
     	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
@@ -46,18 +54,16 @@ public class Robot extends IterativeRobot {
         
     }
     
-    Encoder encoder = new Encoder(0, 1);
-    
     @Override
     public void testInit() {
-    	encoder.reset();
+    	
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	System.out.println(encoder.get());
+    	
     }
     
 }

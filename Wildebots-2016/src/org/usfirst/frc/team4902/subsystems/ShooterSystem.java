@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.MasterTimer;
 import org.usfirst.frc.team4902.robot.PortMap;
+import org.usfirst.frc.team4902.robot.Robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -18,6 +19,8 @@ import edu.wpi.first.wpilibj.Victor;
 public class ShooterSystem extends Subsystem {
 	
 	private static ShooterSystem instance = new ShooterSystem();
+	
+	private volatile boolean isFiring = false;
 	
 	private Victor left = new Victor(PortMap.LeftShooter.getPort()),
 	right = new Victor(PortMap.RightShooter.getPort()),
@@ -39,6 +42,8 @@ public class ShooterSystem extends Subsystem {
 
 	@Override
 	public void execute() {
+		if (Robot.getInstance().isDisabled() || isFiring) return;
+		isFiring = true;
 		System.out.println("Firing!");
 		left.set(0.9);
 		right.set(-0.9);
@@ -52,6 +57,7 @@ public class ShooterSystem extends Subsystem {
 				kick.set(0.2);
 				MasterTimer.getInstance().schedule(() -> {
 					kick.set(0);
+					isFiring = false;
 				}, Duration.ofMillis(400));
 			}, Duration.ofMillis(200));
 		}, Duration.ofMillis(1000));
