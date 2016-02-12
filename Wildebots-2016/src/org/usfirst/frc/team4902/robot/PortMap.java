@@ -14,7 +14,11 @@ public enum PortMap {
 	RightDRiveEncoderB(9),
 	
 	ShooterEncoderA(10),
-	ShooterEncoderB(10);
+	ShooterEncoderB(10),
+	
+	LeftShooter(12),
+	RightShooter(13),
+	Kicker(14);
 	
 	private int port;
 	
