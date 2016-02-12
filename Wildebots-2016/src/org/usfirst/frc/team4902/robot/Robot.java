@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
+import org.usfirst.frc.team4902.subsystems.ShooterSystem;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -11,7 +14,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		ShooterSystem.getInstance().execute();
+    	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
     }
     
 	/**
