@@ -24,7 +24,8 @@ public class ShooterSystem extends Subsystem {
 	
 	private Victor left = new Victor(PortMap.LeftShooter.getPort()),
 	right = new Victor(PortMap.RightShooter.getPort()),
-	kick = new Victor(PortMap.Kicker.getPort());
+	kick = new Victor(PortMap.Kicker.getPort()),
+	armMotor = new Victor(PortMap.ArmMotor.getPort());
 	
 //	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
 	
@@ -39,14 +40,27 @@ public class ShooterSystem extends Subsystem {
 //	public void setAngle(double angle){
 //		shooterArm.setSetpoint(angle);
 //	}
+	
+	public void periodic() {
+		double left = Input.getInstance().getLeftTrigger(), right = Input.getInstance().getRightTrigger();
+		
+		if (left > right) {
+			armMotor.set(-left);
+		} else if (right > left) {
+			armMotor.set(right);
+		} else if (left == 0 && right == 0) {
+			armMotor.set(0);
+		}
+		
+	}
 
 	@Override
 	public void execute() {
 		if (Robot.getInstance().isDisabled() || isFiring) return;
 		isFiring = true;
 		System.out.println("Firing!");
-		left.set(0.9);
-		right.set(-0.9);
+		left.set(-0.9);
+		right.set(0.9);
 		MasterTimer.getInstance().schedule(() -> {
 			System.out.println("Kick!");
 			kick.set(-1);

@@ -21,6 +21,7 @@ public enum PortMap {
 	LeftShooter(4),
 	RightShooter(5),
 	Kicker(6),
+	ArmMotor(7),
 	
 	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
 	
