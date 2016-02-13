@@ -20,17 +20,17 @@ public class Robot extends IterativeRobot {
 	public static Robot getInstance() {
 		return instance;
 	}
-
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	public void robotInit() {
-		instance = this;
-		EventSystem.getInstance().addHandler(() -> {
-			ShooterSystem.getInstance().execute();
-		}, Input.getInstance().getButtonA(), HandlerType.OnPress);
-	}
+	
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
+    public void robotInit() {
+    	instance = this;
+    	EventSystem.getInstance().addHandler(() -> {
+    		ShooterSystem.getInstance().shoot();
+    	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+    }
 
 	public void autonomousInit() {
 
@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		ShooterSystem.getInstance().periodic();
+		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
 	}
 
