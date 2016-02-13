@@ -7,13 +7,6 @@ import org.usfirst.frc.team4902.robot.MasterTimer;
 import org.usfirst.frc.team4902.robot.PortMap;
 import org.usfirst.frc.team4902.robot.Robot;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
@@ -52,14 +45,24 @@ public class ShooterSystem extends Subsystem {
 		} else if (left == 0 && right == 0) {
 			armMotor.set(0);
 		}
+		
+		if (!isBusy) {
+			this.left.set(0);
+			this.right.set(0);
+		}
+		
 	}
 
 	public void shoot() {
+		this.shoot(0.9);
+	}
+	
+	public void shoot(double speed) {
 		if (Robot.getInstance().isDisabled() || isBusy) return;
 		isBusy = true;
 		System.out.println("Firing!");
-		left.set(-0.9);
-		right.set(0.9);
+		left.set(-speed);
+		right.set(speed);
 		MasterTimer.getInstance().schedule(() -> {
 			System.out.println("Kick!");
 			kick.set(-1);
@@ -77,10 +80,14 @@ public class ShooterSystem extends Subsystem {
 	}
 
 	public void pickup() {
+		this.pickup(0.9);
+	}
+	
+	public void pickup(double speed) {
 		if (Robot.getInstance().isDisabled() || isBusy) return;
 		isBusy = true;
-		left.set(0.9);
-		right.set(-0.9);
+		left.set(speed);
+		right.set(-speed);
 		isBusy = false;
 	}
 
