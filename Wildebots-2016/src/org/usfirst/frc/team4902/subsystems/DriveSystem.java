@@ -22,8 +22,11 @@ public class DriveSystem extends Subsystem {
 	/**
 	 * A constant to tweak how quickly the robot will adjust back to straight.
 	 */
-	private final double ADJUSTMENT_SPEED_CONSTANT = 0.8;
-	
+	private final double ADJUSTMENT_SPEED_CONSTANT = 1.5;
+	private final double ADJUSTMENT_SPEED_CONSTANT_TWO = 0.01;;
+	private double lastAngle = 0;
+	private double currentAngle = 0;
+	private double correction = 0;
 	
 	
 	public static DriveSystem getInstance() {
@@ -102,7 +105,23 @@ public class DriveSystem extends Subsystem {
 	public void driveStraight(double speed){
 		
 		double angle = Math.toRadians(Gyrometer.getInstance().getAngle());
+		
 		drive.tankDrive(speed + Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT, speed - Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT);
 	}
+	
+	public void driveStraightTwo(double speed){
+		
+		lastAngle = currentAngle;
+		currentAngle = Math.toRadians(Gyrometer.getInstance().getAngle());
+		correction+= (currentAngle - lastAngle)*ADJUSTMENT_SPEED_CONSTANT_TWO;
+		if (currentAngle<0){
+			drive.tankDrive(speed-correction,speed);
+		}
+		if (currentAngle>0){
+			drive.tankDrive(speed,speed-correction);
+		}
+	}
+	
+	
 
 }
