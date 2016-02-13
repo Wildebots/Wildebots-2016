@@ -41,6 +41,24 @@ public final class Input {
 		
 	}
 	
+	public double getLeftYThreshold() {
+		double threshold = 0.18;
+		if (Math.abs(getLeftY()) < threshold) {
+			return 0;
+		} else {
+			return getLeftY();
+		}
+	}
+	
+	public double getRightYThreshold() {
+		double threshold = 0.18;
+		if (Math.abs(getRightY()) < threshold) {
+			return 0;
+		} else {
+			return getRightY();
+		}
+	}
+	
 	public double getRightX() {
 		return stick.getRawAxis(4);
 	}
