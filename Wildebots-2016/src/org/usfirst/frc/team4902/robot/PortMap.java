@@ -18,7 +18,8 @@ public enum PortMap {
 	
 	LeftShooter(4),
 	RightShooter(5),
-	Kicker(6);
+	Kicker(6),
+	ArmMotor(7);
 	
 	private int port;
 	
