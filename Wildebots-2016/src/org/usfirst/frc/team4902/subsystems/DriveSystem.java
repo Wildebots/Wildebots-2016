@@ -7,6 +7,13 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
 public class DriveSystem extends Subsystem {
+	
+	//variables for arcade drive
+	private boolean rotated;
+	private double savedAngle = 0;
+	private double savedLeftX = 0;
+	private double savedLeftY = 0;
+	
 
 	private static DriveSystem instance = new DriveSystem();
 
@@ -43,6 +50,51 @@ public class DriveSystem extends Subsystem {
 		drive.tankDrive(left, right);
 	}
 	
+	public void arcadeDrive(){
+		double leftX = Input.getInstance().getLeftX();
+		double leftY = Input.getInstance().getLeftY();
+		double robotAngle = Gyrometer.getInstance().getAngle() % 360.0;
+		
+		if (leftX>0.5 && leftY>0.5){
+			savedAngle = Math.toDegrees(Math.atan(leftY/leftX));
+			savedLeftX = leftX;
+			savedLeftY = leftY;
+		}
+		
+		
+		if ((savedLeftX<0 && savedLeftY<0) || (savedLeftX>0 && savedLeftY<0)){
+			savedAngle+=180;
+		}
+		
+		
+		double difference = savedAngle- robotAngle;
+		
+		if (difference> 180){
+			difference = difference-360;
+		}
+		
+		if (Math.abs(difference)>3){
+			
+			if (difference>0){
+				drive.tankDrive(0.4,-0.4);
+			}
+			
+			if (difference<0){
+				drive.tankDrive(-0.4,0.4);
+			}
+			rotated = false;
+		}else{
+			rotated = true;
+		}
+		
+		if (rotated){
+			drive.tankDrive(Input.getInstance().getLeftTrigger()-Input.getInstance().getRightTrigger(),Input.getInstance().getLeftTrigger()-Input.getInstance().getRightTrigger());
+		}
+	
+		
+		
+	}
+	
 	public void setLeft(double speed) {
 		LeftFront.set(speed);
 		LeftBack.set(speed);
@@ -65,16 +117,16 @@ public class DriveSystem extends Subsystem {
 	 * Rotates the robot on the place
 	 * @param degrees (negative for clockwise, positive for counterclockwise)
 	 */
-	public void rotate(int degrees) {
+	public void rotate(double degrees) {
 		Thread RotateThread = new Thread(() -> {
 			double angle = Gyrometer.getInstance().getAngle();
 			if (degrees<0)
 				while (Gyrometer.getInstance().getAngle() < angle+degrees) {
-					this.tankDrive(-0.5, 0.5);
+					this.tankDrive(-0.2, 0.2);
 				}
 			else{
 				while (Gyrometer.getInstance().getAngle()> angle+degrees){
-					this.tankDrive(0.5,-0.5);
+					this.tankDrive(0.2,-0.2);
 				}
 			}
 		});

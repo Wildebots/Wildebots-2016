@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public final class Input {
 	
+	private final double THRESHOLD = 0.18;
+	
 	private final Joystick stick = new Joystick(PortMap.Joystick.getPort());
 	
 	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
@@ -47,12 +49,28 @@ public final class Input {
 		}
 	}
 	
+	public double getLeftXThreshold() {
+		
+		if (Math.abs(getLeftX()) < THRESHOLD) {
+			return 0;
+		} else {
+			return getLeftX();
+		}
+	}
+	
 	public double getRightYThreshold() {
-		double threshold = 0.18;
-		if (Math.abs(getRightY()) < threshold) {
+		if (Math.abs(getRightY()) < THRESHOLD) {
 			return 0;
 		} else {
 			return getRightY();
+		}
+	}
+	
+	public double getRightXThreshold() {
+		if (Math.abs(getRightX()) < THRESHOLD) {
+			return 0;
+		} else {
+			return getRightX();
 		}
 	}
 	
