@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	instance = this;
     	EventSystem.getInstance().addHandler(() -> {
-    		ShooterSystem.getInstance().execute();
+    		ShooterSystem.getInstance().shoot();
     	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
     }
     
