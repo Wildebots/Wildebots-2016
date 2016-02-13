@@ -46,11 +46,12 @@ public class ShooterSystem extends Subsystem {
 			armMotor.set(0);
 		}
 		
-		if (!isBusy) {
-			this.left.set(0);
-			this.right.set(0);
-		}
-		
+	}
+	
+	public void stopShooterMotors() {
+		this.isBusy = false;
+		this.left.set(0);
+		this.right.set(0);
 	}
 
 	public void shoot() {
@@ -88,7 +89,6 @@ public class ShooterSystem extends Subsystem {
 		isBusy = true;
 		left.set(speed);
 		right.set(-speed);
-		isBusy = false;
 	}
 
 	@Override
