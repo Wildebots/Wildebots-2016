@@ -3,6 +3,9 @@ package org.usfirst.frc.team4902.subsystems;
 import org.usfirst.frc.team4902.robot.PortMap;
 import edu.wpi.first.wpilibj.Encoder;
 
+/**
+ * Manages all Encoders
+ */
 public class Encoders {
 	
 	private static Encoders instance = new Encoders();
@@ -12,16 +15,13 @@ public class Encoders {
 			rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort()),
 			shooterEncoder  = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
 	
+	/**
+	 * Use this to access Encoder methods
+	 * @return Instance of Encoders class
+	 */
 	public static Encoders getInstance() {
 		return instance;
 	}
-	
-//	public void initialize() {
-//		leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort());
-//		rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort());
-//		
-//		shooterEncoder = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
-//	}
 	
 	/**
 	 * Resets left and right drive wheel encoders
@@ -74,7 +74,7 @@ public class Encoders {
 	}
 	
 	/**
-	 * Gets angle
+	 * Gets angle of the shooter encoder
 	 * @return Angle
 	 */
 	public double getShooterAngle() {

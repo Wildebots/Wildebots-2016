@@ -1,10 +1,15 @@
 package org.usfirst.frc.team4902.robot;
 
+/**
+ * Contains all ports for all subsystems
+ */
 public enum PortMap {
 	
 	Joystick(0),
 	
 	UltrasonicForward(0), UltrasonicSide(1),
+	
+	YOLOPort(-99),
 	
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	
@@ -24,7 +29,22 @@ public enum PortMap {
 		this.port = port;
 	}
 	
+	/**
+	 * @return The port on the RoboRIO for the specific system
+	 */
 	public int getPort() {
 		return this.port;
+	}
+	
+	/**
+	 * 
+	 * @return Exquisitely formatted factualities about the ports
+	 */
+	public static String getPorts() {
+		String output = "PortMap -> ";
+		for (PortMap port : PortMap.values()) {
+			output += "\n\t PortRegistry " + port.toString() + ": " + port.getPort();  
+		}
+		return output;
 	}
 }

@@ -26,5 +26,13 @@ public class Calculations {
 				);
 		return Math.toDegrees(angle);
 	}
-
+	
+	/**
+	 * Returns a random number
+	 * @return Random int
+	 */
+	public static int randomNumber(int num) {
+		return 4; // Chosen via fair dice roll
+		          // Guaranteed to be random
+	}
 }
