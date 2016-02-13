@@ -35,28 +35,8 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-//		System.out.println("Execute");
-		double threshold = 0.18;
-		double leftY = Input.getInstance().getLeftY(), rightY = Input.getInstance().getRightY();
-
-		if (Math.abs(leftY) < threshold) {
-			leftY = 0;
-		}
-		if (Math.abs(rightY) < threshold){
-			rightY = 0;
-		}
-
+		double leftY = Input.getInstance().getLeftYThreshold(), rightY = Input.getInstance().getRightYThreshold();
 		drive.tankDrive(-leftY, -rightY);
-		
-		//		if (leftY < -threshold || leftY > threshold) {
-//			if (rightY < -threshold || rightY > threshold) {
-//				this.tankDrive(leftY, rightY);
-//			} else {
-//				//				System.out.println("");
-//			}
-//		} else {
-//			//			System.out.println("");
-//		}
 	}
 
 	public synchronized void tankDrive(double left, double right) {
