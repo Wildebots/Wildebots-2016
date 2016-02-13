@@ -14,10 +14,7 @@ public class Camera {
 	public static void startCamera() {
 		camera = CameraServer.getInstance();
 		camera.setQuality(75);
-        // The camera name (eg "cam0") can be found through the Roborio web interface
+                // The camera name (eg "cam0") can be found through the Roborio web interface
 		camera.startAutomaticCapture("cam0");
 	}
-	
-	public double
-	
 }
