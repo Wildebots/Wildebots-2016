@@ -38,5 +38,8 @@ public class MasterTimer {
 		};
 		return task;
 	}
-
+	
+	public void praise() {
+		System.out.println("All praise the MasterTimer...");
+	}
 }
