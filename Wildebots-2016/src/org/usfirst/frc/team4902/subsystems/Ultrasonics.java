@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonics {
 	
-	private static final double VOLTS_PER_CENTIMETRE = .0049;
+	private static final double VOLTS_PER_CENTIMETRE = 0.0049 * (4.8 / 5.0);
 	
 	private static Ultrasonics ultrasonic = new Ultrasonics();
 	

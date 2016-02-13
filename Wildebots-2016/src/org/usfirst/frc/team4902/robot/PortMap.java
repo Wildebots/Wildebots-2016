@@ -6,7 +6,7 @@ public enum PortMap {
 	
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	
-	UltrasonicForward(2), UltrasonicSide(3);
+	UltrasonicForward(0), UltrasonicSide(1);
 	
 	private int port;
 	
