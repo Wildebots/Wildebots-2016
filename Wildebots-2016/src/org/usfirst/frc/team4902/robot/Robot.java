@@ -2,14 +2,8 @@
 package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
-import org.usfirst.frc.team4902.subsystems.ShooterSystem;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import java.time.Duration;
-
-import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
-import org.usfirst.frc.team4902.subsystems.Gyrometer;
+import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -31,10 +25,10 @@ public class Robot extends IterativeRobot {
     		ShooterSystem.getInstance().shoot();
     	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
     }
-
-	public void autonomousInit() {
-
-	}
+    
+    public void autonomousInit() {
+    	
+    }
 
 	public void autonomousPeriodic() {
 
@@ -50,8 +44,8 @@ public class Robot extends IterativeRobot {
 	public void testInit() {
 
 	}
-
-	public void testPeriodic() {
-
-	}
+       
+    public void testPeriodic() {
+    	
+    }
 }
