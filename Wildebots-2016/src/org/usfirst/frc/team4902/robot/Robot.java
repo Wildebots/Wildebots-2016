@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 		
-    public void robotInit(){
+    public void robotInit() {
     	
     }
     
@@ -17,7 +17,7 @@ public class Robot extends IterativeRobot {
     	
     }
 
-    public void teleopPeriodic(){
+    public void teleopPeriodic() {
     
     }
        
