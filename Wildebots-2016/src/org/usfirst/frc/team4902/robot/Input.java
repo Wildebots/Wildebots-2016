@@ -18,7 +18,9 @@ public final class Input {
 	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
 			B = new JoystickButton(stick, PortMap.ButtonB.getPort()),
 			X = new JoystickButton(stick, PortMap.ButtonX.getPort()),
-			Y = new JoystickButton(stick, PortMap.ButtonY.getPort());
+			Y = new JoystickButton(stick, PortMap.ButtonY.getPort()),
+			LeftBumper = new JoystickButton(stick, PortMap.LeftBumper.getPort()),
+			RightBumper = new JoystickButton(stick, PortMap.RightBumper.getPort());
 	
 	// Instance of this class
 	private static Input instance = new Input();
@@ -59,6 +61,14 @@ public final class Input {
 	public double getRightTrigger(){
 		return stick.getRawAxis(3);
 	}
+	
+	public JoystickButton getLeftBumper() {
+		return LeftBumper;
+	}
+	
+	public JoystickButton getRightBumper() {
+		return RightBumper;
+	}
 
 	public JoystickButton getButtonA() {
 		return A;
@@ -96,7 +106,7 @@ public final class Input {
 	 */
 	public ArrayList<JoystickButton> getButtons() {
 		ArrayList<JoystickButton> buttons = new ArrayList<>();
-		buttons.addAll(Arrays.asList(A,B,X,Y));
+		buttons.addAll(Arrays.asList(A,B,X,Y,LeftBumper,RightBumper));
 		return buttons;
 	}
 }

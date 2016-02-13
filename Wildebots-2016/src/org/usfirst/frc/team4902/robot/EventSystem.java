@@ -7,11 +7,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public final class EventSystem extends Thread {
 	
+	/**
+	 * Specifies when the action specified by this Runnable (which is inserted into a Handler) will run.
+	 */
 	public enum HandlerType {
 		OnPress, OnRelease, WhilePressed;
 	}
 	
-	public class Handler {
+	private class Handler {
 		
 		private Runnable r;
 		
@@ -42,7 +45,7 @@ public final class EventSystem extends Thread {
 		return instance;
 	}
 	
-	public EventSystem() {
+	private EventSystem() {
 		Input.getInstance().getButtons().forEach(button -> {
 			eventMap.put(button, new ArrayList<Handler>());
 			pressedMap.put(button, false);
@@ -81,6 +84,12 @@ public final class EventSystem extends Thread {
 		}
 	}
 	
+	/**
+	 * Attaches some code to be run to a button, this code is run when the condition for the HandlerType is met.
+	 * @param r Runnable to be run when triggered
+	 * @param button Button to attach handler to
+	 * @param type The type of handler
+	 */
 	public void addHandler(Runnable r, JoystickButton button, HandlerType type) {
 		if (!eventMap.keySet().contains(button)) {
 			throw new RuntimeException("Attempted to map handler to unregistered button!");
@@ -89,6 +98,11 @@ public final class EventSystem extends Thread {
 		}
 	}
 	
+	/**
+	 * Gets the number of handlers attached to a button
+	 * @param button The button for which to get the number of handlers
+	 * @return The number of handers attrached to this button
+	 */
 	public int getNumHandlers(JoystickButton button) {
 		if (!eventMap.keySet().contains(button)) {
 			System.err.println("Passed EventSystem.getNumHandlers(JoystickButton) an unregistered button!");
@@ -98,6 +112,10 @@ public final class EventSystem extends Thread {
 		}
 	}
 	
+	/**
+	 * Removes all handlers attached to a button
+	 * @param button The button of which to clear the handlers
+	 */
 	public void clearHandlers(JoystickButton button) {
 		if (!eventMap.keySet().contains(button)) {
 			System.err.println("Passed EventSystem.clearHandlers(JoystickButton) an unregistered button!");
@@ -105,6 +123,15 @@ public final class EventSystem extends Thread {
 		} else {
 			eventMap.get(button).clear();
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String out = "EventSystem ->";
+		for (JoystickButton b : this.eventMap.keySet()) {
+			out += "\n	Button "+Input.getInstance().getButtonName(b)+": Handlers: "+this.getNumHandlers(b);
+		}
+		return out;
 	}
 	
 }

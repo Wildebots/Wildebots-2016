@@ -9,9 +9,10 @@ public enum PortMap {
 	
 	UltrasonicForward(0), UltrasonicSide(1),
 	
-	YOLOPort(-99),
+	yoloPort(-99),
 	
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
+	LeftBumper(5), RightBumper(6),
 	
 	// TODO: Add real port numbers
 	LeftDriveEncoderA(9),
