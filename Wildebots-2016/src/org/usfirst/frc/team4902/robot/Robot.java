@@ -41,7 +41,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-
+		ShooterSystem.getInstance().periodic();
+		DriveSystem.getInstance().execute();
 	}
 
 
