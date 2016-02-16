@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * Starting point of program
  */
 public class Robot extends IterativeRobot {
-		
+	
 	private static Robot instance;
 	
 	public static Robot getInstance() {
