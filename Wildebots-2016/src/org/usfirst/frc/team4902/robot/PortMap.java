@@ -57,5 +57,4 @@ public enum PortMap {
 		}
 		return output;
 	}
-	
 }

@@ -133,5 +133,4 @@ public final class EventSystem extends Thread {
 		}
 		return out;
 	}
-	
 }

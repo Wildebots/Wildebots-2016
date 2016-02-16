@@ -96,5 +96,4 @@ public class ShooterSystem extends Subsystem {
 		// TODO Auto-generated method stub
 
 	}
-
 }

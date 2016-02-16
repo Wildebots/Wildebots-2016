@@ -25,5 +25,4 @@ public class Gyrometer {
 	public void calibrate() {
 		gyro.calibrate();
 	}
-
 }

@@ -41,6 +41,5 @@ public class MasterTimer {
 	
 	public void praise() {
 		System.out.println("All praise the MasterTimer...");
-	}
-	
+	}	
 }
