@@ -66,20 +66,34 @@ public class DriveSystem extends Subsystem {
 	 * @param degrees (negative for clockwise, positive for counterclockwise)
 	 */
 	public void rotate(int degrees) {
-		Thread RotateThread = new Thread(() -> {
-			double angle = Gyrometer.getInstance().getAngle();
-			if (degrees<0)
-				while (Gyrometer.getInstance().getAngle() < angle+degrees) {
-					this.tankDrive(-0.5, 0.5);
-				}
-			else{
-				while (Gyrometer.getInstance().getAngle()> angle+degrees){
-					this.tankDrive(0.5,-0.5);
-				}
-			}
-		});
-		RotateThread.setDaemon(true);
-		RotateThread.start();
+//		Thread RotateThread = new Thread(() -> {
+//			double angle = Gyrometer.getInstance().getAngle();
+//			if (degrees<0)
+//				while (Gyrometer.getInstance().getAngle() < angle+degrees) {
+//					this.tankDrive(-0.5, 0.5);
+//				}
+//			else{
+//				while (Gyrometer.getInstance().getAngle()> angle+degrees){
+//					this.tankDrive(0.5,-0.5);
+//				}
+//			}
+//		});
+//		RotateThread.setDaemon(true);
+//		RotateThread.start();
+		if (Autonomous.inRange(Gyrometer.getInstance().getAngle(), 90, 0.5)) {
+			drive.tankDrive(0, 0);
+			return;
+		}
+		double diff = degrees-Gyrometer.getInstance().getAngle();
+		
+		if (diff > 180) {
+			diff = diff-360;
+		}
+		
+		drive.tankDrive(Math.sin(diff), Math.sin(diff));
+		
+		return;
+		
 	}
 	
 	public void driveStraight(double speed){
