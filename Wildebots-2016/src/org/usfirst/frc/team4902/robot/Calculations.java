@@ -35,4 +35,5 @@ public class Calculations {
 		return 4; // Chosen via fair dice roll
 		          // Guaranteed to be random
 	}
+	
 }

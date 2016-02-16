@@ -22,7 +22,16 @@ public enum PortMap {
 	RightDRiveEncoderB(9),
 	
 	ShooterEncoderA(10),
-	ShooterEncoderB(10);
+	ShooterEncoderB(10),
+	
+	LeftShooter(4),
+	RightShooter(5),
+	Kicker(6),
+	ArmMotor(7),
+	
+	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
+	
+	Gyro(0);
 	
 	private int port;
 	
@@ -48,4 +57,5 @@ public enum PortMap {
 		}
 		return output;
 	}
+	
 }

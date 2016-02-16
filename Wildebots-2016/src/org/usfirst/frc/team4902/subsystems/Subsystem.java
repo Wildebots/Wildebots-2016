@@ -20,5 +20,4 @@ public abstract class Subsystem {
 	 * Use this method to print values to console
 	 */
 	public abstract void log();
-
 }

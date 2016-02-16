@@ -31,4 +31,5 @@ public class Accelerometer {
 	public double getZ() {
 		return accel.getZ();
 	}
+	
 }

@@ -12,6 +12,8 @@ public class Camera {
 	
 //	private static NetworkTable contours = NetworkTable.getTable("GRIP/Contours");
 	
+	private static int session;
+	
 	// This function starts the camera server and can be seen in the FRC Driver Station
 	public static void startCamera() {
 		camera = CameraServer.getInstance();
@@ -19,4 +21,5 @@ public class Camera {
                 // The camera name (eg "cam0") can be found through the Roborio web interface
 		camera.startAutomaticCapture("cam0");
 	}
+	
 }
