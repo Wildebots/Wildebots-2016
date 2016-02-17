@@ -85,14 +85,13 @@ public class DriveSystem extends Subsystem {
 			return;
 		}
 		
-		double diff = degrees-Gyrometer.getInstance().getAngle();
+		double diff = degrees-(Gyrometer.getInstance().getAngle()%360);
 		
 		if (diff > 180) {
 			diff = diff-360;
 		}
 		
-		diff = Math.toRadians(diff);
-		
+		diff = Math.toRadians(diff/2);
 		drive.tankDrive(Math.sin(diff), Math.sin(-diff));
 		
 		return;
