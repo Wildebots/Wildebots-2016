@@ -35,7 +35,8 @@ public class Autonomous extends Subsystem {
 
 	@Override
 	public void execute() {
-		if (current.isFinished()) {
+		if (isDone) return;
+		else if (current.isFinished()) {
 			current.exit();
 			if (ActionList.indexOf(current) == ActionList.size()-1) {
 				isDone = true;
