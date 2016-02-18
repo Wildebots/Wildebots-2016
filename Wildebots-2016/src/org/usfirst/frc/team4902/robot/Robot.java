@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
@@ -19,6 +20,25 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit(){
     	instance = this;
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		
+    		ShooterSystem.getInstance().shoot();
+    		
+    	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		
+    		ShooterSystem.getInstance().pickup();
+    		
+    	}, Input.getInstance().getRightBumper(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		
+    		ShooterSystem.getInstance().stopShooterMotors();
+    		
+    	}, Input.getInstance().getRightBumper(), HandlerType.OnRelease);
+    	
     }
     
     public void teleopInit() {
