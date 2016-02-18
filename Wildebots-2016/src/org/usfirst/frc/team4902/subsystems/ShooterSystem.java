@@ -7,6 +7,7 @@ import org.usfirst.frc.team4902.robot.MasterTimer;
 import org.usfirst.frc.team4902.robot.PortMap;
 import org.usfirst.frc.team4902.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
@@ -20,7 +21,7 @@ public class ShooterSystem extends Subsystem {
 			kick = new Victor(PortMap.Kicker.getPort()),
 			armMotor = new Victor(PortMap.ArmMotor.getPort());
 
-	//	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
+	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
 
 	public static ShooterSystem getInstance(){
 		return instance;
@@ -30,9 +31,9 @@ public class ShooterSystem extends Subsystem {
 	 * sets the angle of the arm to a specified value
 	 * @param angle The desired angle to set the arm to
 	 */
-	//	public void setAngle(double angle){
-	//		shooterArm.setSetpoint(angle);
-	//	}
+	public void setAngle(double angle){
+		shooterArm.setSetpoint(angle);
+	}
 
 	@Override
 	public void execute() {
