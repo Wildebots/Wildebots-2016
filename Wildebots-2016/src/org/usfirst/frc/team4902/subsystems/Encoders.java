@@ -81,16 +81,14 @@ public class Encoders {
 		return (shooterEncoder.get()/497)*360;
 	}
 	
-	//TODO: get actual count
 	public double getBaseSegmentAngle(){
-		final double COUNTS_PER_REV = 360;
+		final double COUNTS_PER_REV = 497 ;
 		return (armBaseSegmentEncoder.get() / COUNTS_PER_REV) * 360;
 		
 	}
 	
-	//TODO: get actual count
 	public double getSecondSegmentAngle(){
-		final double COUNTS_PER_REV = 360;
+		final double COUNTS_PER_REV = 497 * 16/9;
 		return (armSecondSegmentEncoder.get() / COUNTS_PER_REV) * 360;
 		
 	}

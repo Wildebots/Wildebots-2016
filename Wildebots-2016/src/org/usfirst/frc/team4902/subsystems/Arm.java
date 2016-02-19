@@ -8,18 +8,17 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Arm extends Subsystem{
 	
-	private final double baseSegmentLength = 10.0;
-	private final double secondSegmentLength = 7.0;
+	private final double baseSegmentLength = 16.5 * 2.54;
+	private final double secondSegmentLength = 21.75 * 2.54;
 	
-	private double offset;
+	private double offset = (1.5 - 1.0) * 2.54;
 	
-	private double SPEED_ADJUSTMENT = 0.1;
 	
 	
 	private static Arm instance = new Arm();
 	
 	private Talon baseSegmentMotor = new Talon(PortMap.ArmBaseSegmentMotor.getPort());
-	private Talon secondSegmentMotor = new Talon(PortMap.ArmBaseSegmentMotor.getPort());
+	private Talon secondSegmentMotor = new Talon(PortMap.ArmSecondSegmentMotor.getPort());
 	
 	public Arm getInstance(){
 		return instance;
@@ -31,13 +30,13 @@ public class Arm extends Subsystem{
 		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold();
 		
 		if (isInLegalPosition()){
-			baseSegmentMotor.set(baseSegmentSpeed * SPEED_ADJUSTMENT);
-			secondSegmentMotor.set(secondSegmentSpeed * SPEED_ADJUSTMENT);
+			baseSegmentMotor.set(baseSegmentSpeed);
+			secondSegmentMotor.set(secondSegmentSpeed);
 		}
 		
 		else{
-			baseSegmentMotor.set(-baseSegmentSpeed * SPEED_ADJUSTMENT);
-			secondSegmentMotor.set(-secondSegmentSpeed * SPEED_ADJUSTMENT);
+			baseSegmentMotor.set(-baseSegmentSpeed);
+			secondSegmentMotor.set(-secondSegmentSpeed);
 		}
 	}
 	

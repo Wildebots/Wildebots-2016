@@ -41,8 +41,12 @@ public class Calculations {
 		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
 		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
 		
+//		double length = baseSegmentLength * Math.cos(baseSegmentAngle) 
+//												+ secondSegmentLength * Math.sin(secondSegmentAngle-(Math.PI/2 -baseSegmentAngle))
+//																	- offset;
+		
 		double length = baseSegmentLength * Math.cos(baseSegmentAngle) 
-												+ secondSegmentLength * Math.sin(secondSegmentAngle-(Math.PI/2 -baseSegmentAngle))
+												+ secondSegmentLength * Math.cos(secondSegmentAngle)
 																	- offset;
 		return length;
 		
