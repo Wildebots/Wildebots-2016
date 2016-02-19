@@ -5,7 +5,7 @@ package org.usfirst.frc.team4902.robot;
  */
 public enum PortMap {
 	
-	Joystick(0),
+	primaryJoystick(0), secondaryJoystick(1),
 	
 	UltrasonicForward(0), UltrasonicSide(1),
 	
@@ -15,14 +15,15 @@ public enum PortMap {
 	LeftBumper(5), RightBumper(6),
 	
 	// TODO: Add real port numbers
-	LeftDriveEncoderA(9),
-	LeftDriveEncoderB(9),
 	
-	RightDriveEncoderA(9),
-	RightDRiveEncoderB(9),
+	ArmBaseSegmentEncoderA(9),
+	ArmBaseSegmentEncoderB(9),
 	
-	ShooterEncoderA(10),
-	ShooterEncoderB(10),
+	ArmSecondSegmentEncoderA(10),
+	ArmSecondSegmentEncoderB(10),
+	
+	ShooterEncoderA(11),
+	ShooterEncoderB(11),
 	
 	LeftShooter(4),
 	RightShooter(5),

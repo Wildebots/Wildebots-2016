@@ -28,6 +28,26 @@ public class Calculations {
 	}
 	
 	/**
+	 * 
+	 * @param baseSegmentLength length of the first segment of the arm (axle to axle)
+	 * @param secondSegmentLength length of the second, moving segment of the arm (axle to furthest point parallel to arm)
+	 * @param baseSegmentAngle angle of elevation of the first segment
+	 * @param secondSegmentAngle angle of the second segment relative to the first (e.g. 180 when arm is completely straight)
+	 * @param offset the distance between where the first arm segment starts and the edge of the robot, minus any extra extension from arm thickness
+	 * @return the length of extension from the base
+	 */
+	
+	public static double getArmExtension(double baseSegmentLength, double secondSegmentLength, double baseSegmentAngle, double secondSegmentAngle, double offset){
+		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
+		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
+		
+		double length = baseSegmentLength * Math.cos(baseSegmentAngle) 
+												+ secondSegmentLength * Math.sin(secondSegmentAngle-(Math.PI/2 -baseSegmentAngle))
+																	- offset;
+		return length;
+		
+	}
+	/**
 	 * Returns a random number
 	 * @return Random int
 	 */

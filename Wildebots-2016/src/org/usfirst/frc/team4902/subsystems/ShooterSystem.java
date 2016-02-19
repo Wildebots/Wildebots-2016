@@ -36,7 +36,7 @@ public class ShooterSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		double left = Input.getInstance().getLeftTrigger(), right = Input.getInstance().getRightTrigger();
+		double left = Input.getPrimaryInstance().getLeftTrigger(), right = Input.getPrimaryInstance().getRightTrigger();
 
 		if (left > right) {
 			armMotor.set(-left);

@@ -11,8 +11,8 @@ public class Encoders {
 	private static Encoders instance = new Encoders();
 	
 	//Initializes encoders
-	private Encoder leftDriveEncoder = new Encoder(PortMap.LeftDriveEncoderA.getPort(), PortMap.LeftDriveEncoderB.getPort()),
-			rightDriveEncoder = new Encoder(PortMap.RightDriveEncoderA.getPort(), PortMap.RightDRiveEncoderB.getPort()),
+	private Encoder armBaseSegmentEncoder = new Encoder(PortMap.ArmBaseSegmentEncoderA.getPort(), PortMap.ArmBaseSegmentEncoderB.getPort()),
+			armSecondSegmentEncoder = new Encoder(PortMap.ArmSecondSegmentEncoderA.getPort(), PortMap.ArmSecondSegmentEncoderB.getPort()),
 			shooterEncoder  = new Encoder(PortMap.ShooterEncoderA.getPort(), PortMap.ShooterEncoderB.getPort());
 	
 	/**
@@ -27,8 +27,8 @@ public class Encoders {
 	 * Resets left and right drive wheel encoders
 	 */
 	public void resetDriveEncoders() {
-		leftDriveEncoder.reset();
-		rightDriveEncoder.reset();
+		armBaseSegmentEncoder.reset();
+		armSecondSegmentEncoder.reset();
 	}
 	
 	/**
@@ -38,33 +38,33 @@ public class Encoders {
 		shooterEncoder.reset();
 	}
 	
-	/**
-	 * @return Left drive wheel encoder count
-	 */
-	public int getLeftDriveCount() {
-		return leftDriveEncoder.get();
-	}
-	
-	/**
-	 * @return Right drive wheel encoder count
-	 */
-	public int getRightDriveCount() {
-		return rightDriveEncoder.get();
-	}
-	
-	/**
-	 * @return Left drive wheel encoder distance
-	 */
-	public double getLeftDriveDistance() {
-		return leftDriveEncoder.getDistance();
-	}
-	
-	/**
-	 * @return Right drive wheel encoder distance
-	 */
-	public double getRightDriveDistance() {
-		return rightDriveEncoder.getDistance();
-	}
+//	/**
+//	 * @return Left drive wheel encoder count
+//	 */
+//	public int getLeftDriveCount() {
+//		return armBaseSegmentEncoder.get();
+//	}
+//	
+//	/**
+//	 * @return Right drive wheel encoder count
+//	 */
+//	public int getRightDriveCount() {
+//		return armSecondSegmentEncoder.get();
+//	}
+//	
+//	/**
+//	 * @return Left drive wheel encoder distance
+//	 */
+//	public double getLeftDriveDistance() {
+//		return armBaseSegmentEncoder.getDistance();
+//	}
+//	
+//	/**
+//	 * @return Right drive wheel encoder distance
+//	 */
+//	public double getRightDriveDistance() {
+//		return armSecondSegmentEncoder.getDistance();
+//	}
 	
 	/**
 	 * @return Shooter encoder count
@@ -81,15 +81,29 @@ public class Encoders {
 		return (shooterEncoder.get()/497)*360;
 	}
 	
+	//TODO: get actual count
+	public double getBaseSegmentAngle(){
+		final double COUNTS_PER_REV = 360;
+		return (armBaseSegmentEncoder.get() / COUNTS_PER_REV) * 360;
+		
+	}
+	
+	//TODO: get actual count
+	public double getSecondSegmentAngle(){
+		final double COUNTS_PER_REV = 360;
+		return (armSecondSegmentEncoder.get() / COUNTS_PER_REV) * 360;
+		
+	}
+	
 	public Encoder getShooterEncoder(){
 		return shooterEncoder;
 	}
 	
-	public Encoder getLeftDriveEncoder(){
-		return leftDriveEncoder;
+	public Encoder getArmBaseSegmentEncoder(){
+		return armBaseSegmentEncoder;
 	}
 	
-	public Encoder getRightDriveEncoder(){
-		return rightDriveEncoder;
+	public Encoder getArmSecondSegmentEncoder(){
+		return armSecondSegmentEncoder;
 	}
 }

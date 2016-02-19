@@ -46,7 +46,11 @@ public final class EventSystem extends Thread {
 	}
 	
 	private EventSystem() {
-		Input.getInstance().getButtons().forEach(button -> {
+		Input.getPrimaryInstance().getButtons().forEach(button -> {
+			eventMap.put(button, new ArrayList<Handler>());
+			pressedMap.put(button, false);
+		});
+		Input.getSecondaryInstance().getButtons().forEach(button -> {
 			eventMap.put(button, new ArrayList<Handler>());
 			pressedMap.put(button, false);
 		});
@@ -56,7 +60,34 @@ public final class EventSystem extends Thread {
 	@Override
 	public void run() {
 		while (true) {
-			Input.getInstance().getButtons().forEach(button -> {
+			Input.getPrimaryInstance().getButtons().forEach(button -> {
+				if (button.get()) {
+					eventMap.get(button).forEach(handler -> {
+						if (handler.getType().equals(HandlerType.OnPress)) {
+							if (!pressedMap.get(button)) {
+								handler.getRunnable().run();
+							}
+						} else if (handler.getType().equals(HandlerType.WhilePressed)) {
+							handler.getRunnable().run();
+						} else if (!handler.getType().equals(HandlerType.OnRelease)) {
+							handler.getRunnable().run();
+						}
+					});
+					pressedMap.put(button, true);
+				} else if (!button.get()) {
+					eventMap.get(button).forEach(handler -> {
+						if (handler.getType().equals(HandlerType.OnRelease)) {
+							if (pressedMap.get(button)) {
+								handler.getRunnable().run();
+							}
+						}
+					});
+					pressedMap.put(button, false);
+				}
+			});
+			
+			// maintainable, modular code...
+			Input.getSecondaryInstance().getButtons().forEach(button -> {
 				if (button.get()) {
 					eventMap.get(button).forEach(handler -> {
 						if (handler.getType().equals(HandlerType.OnPress)) {
@@ -101,7 +132,7 @@ public final class EventSystem extends Thread {
 	/**
 	 * Gets the number of handlers attached to a button
 	 * @param button The button for which to get the number of handlers
-	 * @return The number of handers attrached to this button
+	 * @return The number of handlers attached to this button
 	 */
 	public int getNumHandlers(JoystickButton button) {
 		if (!eventMap.keySet().contains(button)) {
@@ -129,7 +160,7 @@ public final class EventSystem extends Thread {
 	public String toString() {
 		String out = "EventSystem ->";
 		for (JoystickButton b : this.eventMap.keySet()) {
-			out += "\n	Button "+Input.getInstance().getButtonName(b)+": Handlers: "+this.getNumHandlers(b);
+			out += "\n	Button "+Input.getPrimaryInstance().getButtonName(b)+": Handlers: "+this.getNumHandlers(b);
 		}
 		return out;
 	}
