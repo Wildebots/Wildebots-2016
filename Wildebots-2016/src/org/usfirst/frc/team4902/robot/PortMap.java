@@ -30,6 +30,9 @@ public enum PortMap {
 	Kicker(6),
 	ArmMotor(7),
 	
+	//TODO: Add real values
+	ArmBaseSegmentMotor(0), ArmSecondSegmentMotor(1),
+	
 	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
 	
 	Gyro(0);
