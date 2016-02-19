@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
+import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
@@ -19,7 +20,10 @@ public class Robot extends IterativeRobot {
 	}
 	
     public void robotInit(){
+    	
     	instance = this;
+    	
+    	Camera.startCamera();
     	
     	EventSystem.getInstance().addHandler(() -> {
     		

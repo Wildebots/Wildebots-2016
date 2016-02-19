@@ -37,14 +37,16 @@ public class ShooterSystem extends Subsystem {
 	@Override
 	public void execute() {
 		double left = Input.getInstance().getLeftTrigger(), right = Input.getInstance().getRightTrigger();
-
-		if (left > right) {
-			armMotor.set(-left);
-		} else if (right > left) {
-			armMotor.set(right);
-		} else if (left == 0 && right == 0) {
-			armMotor.set(0);
-		}
+		
+		armMotor.set(left-right);
+		
+//		if (left > right) {
+//			armMotor.set(-left);
+//		} else if (right > left) {
+//			armMotor.set(right);
+//		} else if (left == 0 && right == 0) {
+//			armMotor.set(0);
+//		}
 		
 	}
 	
@@ -55,7 +57,7 @@ public class ShooterSystem extends Subsystem {
 	}
 
 	public void shoot() {
-		this.shoot(0.9);
+		this.shoot(1);
 	}
 	
 	public void shoot(double speed) {
@@ -81,7 +83,7 @@ public class ShooterSystem extends Subsystem {
 	}
 
 	public void pickup() {
-		this.pickup(0.9);
+		this.pickup(0.75);
 	}
 	
 	public void pickup(double speed) {
