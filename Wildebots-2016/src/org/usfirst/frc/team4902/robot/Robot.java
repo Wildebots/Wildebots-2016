@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
     	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
-    		System.out.println("Alex is important for testing too.....");
+    		ShooterSystem.getInstance().setAngle(45);
     	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
     }

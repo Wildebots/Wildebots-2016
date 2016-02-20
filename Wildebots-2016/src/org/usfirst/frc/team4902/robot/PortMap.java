@@ -24,8 +24,8 @@ public enum PortMap {
 	ArmBaseSegmentMotor(8),
 	ArmSecondSegmentMotor(9),
 	
-	ShooterEncoderA(11),
-	ShooterEncoderB(11),
+	ShooterEncoderA(8),
+	ShooterEncoderB(9),
 	
 	LeftShooter(4),
 	RightShooter(5),

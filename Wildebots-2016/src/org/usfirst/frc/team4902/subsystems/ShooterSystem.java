@@ -7,6 +7,7 @@ import org.usfirst.frc.team4902.robot.MasterTimer;
 import org.usfirst.frc.team4902.robot.PortMap;
 import org.usfirst.frc.team4902.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
@@ -20,7 +21,7 @@ public class ShooterSystem extends Subsystem {
 			kick = new Victor(PortMap.Kicker.getPort()),
 			armMotor = new Victor(PortMap.ArmMotor.getPort());
 
-	//	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
+	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
 
 	public static ShooterSystem getInstance(){
 		return instance;
@@ -30,26 +31,27 @@ public class ShooterSystem extends Subsystem {
 	 * sets the angle of the arm to a specified value
 	 * @param angle The desired angle to set the arm to
 	 */
-	//	public void setAngle(double angle){
-	//		shooterArm.setSetpoint(angle);
-	//	}
+	public void setAngle(double angle) {
+		int count = (int) ((angle / 360) * 497 * 18);
+		shooterArm.setSetpoint(count);
+	}
 
 	@Override
 	public void execute() {
 		double left = Input.getSecondaryInstance().getLeftTrigger(), right = Input.getSecondaryInstance().getRightTrigger();
-		
+
 		armMotor.set(left-right);
-		
-//		if (left > right) {
-//			armMotor.set(-left);
-//		} else if (right > left) {
-//			armMotor.set(right);
-//		} else if (left == 0 && right == 0) {
-//			armMotor.set(0);
-//		}
-		
+
+		//		if (left > right) {
+		//			armMotor.set(-left);
+		//		} else if (right > left) {
+		//			armMotor.set(right);
+		//		} else if (left == 0 && right == 0) {
+		//			armMotor.set(0);
+		//		}
+
 	}
-	
+
 	public void stopShooterMotors() {
 		this.isBusy = false;
 		this.left.set(0);
@@ -59,7 +61,7 @@ public class ShooterSystem extends Subsystem {
 	public void shoot() {
 		this.shoot(1);
 	}
-	
+
 	public void shoot(double speed) {
 		if (Robot.getInstance().isDisabled() || isBusy) return;
 		isBusy = true;
@@ -85,7 +87,7 @@ public class ShooterSystem extends Subsystem {
 	public void pickup() {
 		this.pickup(0.75);
 	}
-	
+
 	public void pickup(double speed) {
 		if (Robot.getInstance().isDisabled() || isBusy) return;
 		isBusy = true;
