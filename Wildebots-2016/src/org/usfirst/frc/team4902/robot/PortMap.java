@@ -21,8 +21,8 @@ public enum PortMap {
 	ArmSecondSegmentEncoderB(10),
 	
 	//TODO: Temporary values
-	ArmBaseSegmentMotor(111),
-	ArmSecondSegmentMotor(112),
+	ArmBaseSegmentMotor(8),
+	ArmSecondSegmentMotor(9),
 	
 	ShooterEncoderA(11),
 	ShooterEncoderB(11),

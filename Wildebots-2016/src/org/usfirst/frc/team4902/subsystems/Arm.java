@@ -14,7 +14,7 @@ public class Arm extends Subsystem{
 	
 	private final double offset = (1.5 - 1.0) * 2.54;
 	
-	private final  double SPEED_ADJUSTMENT = 0.05;
+	private final  double SPEED_ADJUSTMENT = 0.5;
 	
 	private static Arm instance = new Arm();
 	
@@ -25,7 +25,7 @@ public class Arm extends Subsystem{
 	private PIDController secondSegmentPID = new PIDController(0.05,0.0,0.5,Encoders.getInstance().getArmSecondSegmentEncoder(),secondSegmentMotor);
 	
 	
-	public Arm getInstance(){
+	public static Arm getInstance(){
 		return instance;
 	}
 

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
+import org.usfirst.frc.team4902.subsystems.Arm;
 import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
@@ -43,6 +44,14 @@ public class Robot extends IterativeRobot {
     		
     	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnRelease);
     	
+    	EventSystem.getInstance().addHandler(() -> {
+    		DriveSystem.getInstance().rotate(90);
+    	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		System.out.println("Alex is important for testing too.....");
+    	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
+    	
     }
     
     public void teleopInit() {
@@ -56,6 +65,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
+		Arm.getInstance().execute();
 	}
 
 	@Override
