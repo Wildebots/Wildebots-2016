@@ -26,7 +26,7 @@ public class Encoders {
 	/**
 	 * Resets left and right drive wheel encoders
 	 */
-	public void resetDriveEncoders() {
+	public void resetArmEncoders() {
 		armBaseSegmentEncoder.reset();
 		armSecondSegmentEncoder.reset();
 	}
