@@ -10,28 +10,30 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * Handles all driver input. Access using Input.getInstance()
  */
 public final class Input {
-	
+
 	private Input(PortMap stickPort){
 		this.stickPort = stickPort.getPort();
+		this.stick = new Joystick(this.stickPort);
+		A = new JoystickButton(stick, PortMap.ButtonA.getPort());
+		B = new JoystickButton(stick, PortMap.ButtonB.getPort());
+		X = new JoystickButton(stick, PortMap.ButtonX.getPort());
+		Y = new JoystickButton(stick, PortMap.ButtonY.getPort());
+		LeftBumper = new JoystickButton(stick, PortMap.LeftBumper.getPort());
+		RightBumper = new JoystickButton(stick, PortMap.RightBumper.getPort());
 	}
-	
+
 	private int stickPort;
-	
+
 	// Joystick object mapped to the port of the xbox controller
-	private final Joystick stick = new Joystick(stickPort);
-	
+	private final Joystick stick;
+
 	// JoystickButton objects mapped to ports of buttons on controller
-	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
-			B = new JoystickButton(stick, PortMap.ButtonB.getPort()),
-			X = new JoystickButton(stick, PortMap.ButtonX.getPort()),
-			Y = new JoystickButton(stick, PortMap.ButtonY.getPort()),
-			LeftBumper = new JoystickButton(stick, PortMap.LeftBumper.getPort()),
-			RightBumper = new JoystickButton(stick, PortMap.RightBumper.getPort());
-	
+	private final JoystickButton A, B, X, Y, LeftBumper, RightBumper;
+
 	// Instance of this class
 	private static Input primaryInstance = new Input(PortMap.primaryJoystick);
 	private static Input secondaryInstance = new Input(PortMap.secondaryJoystick);
-	
+
 	/**
 	 * Useless shit made by George to make life more difficult, but you have to use it to access Input methods
 	 * @return Instance of the Input class
@@ -39,28 +41,27 @@ public final class Input {
 	public static Input getPrimaryInstance() {
 		return primaryInstance;
 	}
-	
+
 	public static Input getSecondaryInstance() {
 		return secondaryInstance;
 	}
-	
+
 	public int getJoystickNumber(){
 		return stickPort+1;
 	}
-	
+
 	public Joystick getJoystick() {
 		return stick;
 	}
-	
+
 	public double getLeftX(){
 		return stick.getRawAxis(0);
 	}
-	
+
 	public double getLeftY() {
 		return stick.getRawAxis(1);
-		
 	}
-	
+
 	public double getLeftYThreshold() {
 		double threshold = 0.18;
 		if (Math.abs(getLeftY()) < threshold) {
@@ -69,7 +70,7 @@ public final class Input {
 			return getLeftY();
 		}
 	}
-	
+
 	public double getRightYThreshold() {
 		double threshold = 0.18;
 		if (Math.abs(getRightY()) < threshold) {
@@ -78,27 +79,27 @@ public final class Input {
 			return getRightY();
 		}
 	}
-	
+
 	public double getRightX() {
 		return stick.getRawAxis(4);
 	}
-	
+
 	public double getRightY() {
 		return stick.getRawAxis(5);
 	}
-	
+
 	public double getLeftTrigger(){
 		return stick.getRawAxis(2);
 	}
-	
+
 	public double getRightTrigger(){
 		return stick.getRawAxis(3);
 	}
-	
+
 	public JoystickButton getLeftBumper() {
 		return LeftBumper;
 	}
-	
+
 	public JoystickButton getRightBumper() {
 		return RightBumper;
 	}
@@ -114,11 +115,11 @@ public final class Input {
 	public JoystickButton getButtonX() {
 		return X;
 	}
-	
+
 	public JoystickButton getButtonY() {
 		return Y;
 	}
-	
+
 	/**
 	 * @param button The name of the button in which you wish to inquire the nomenclatural information of.
 	 * @return Name of the button 
@@ -132,7 +133,7 @@ public final class Input {
 		else System.err.println("Unrecognized button passed to Input.getButtonName! Returning null!");
 		return out;
 	}
-	
+
 	/**
 	 * If for some reason you ever need to get an ArrayList of all the buttons (???) George's got you covered lol
 	 * @return An ArrayList holding all the buttons mapped to the controller
