@@ -37,17 +37,25 @@ public class Camera {
 	public void centerCamera() {
 		Thread centreCamThread = new Thread(() -> {
 			double[] defaultValue = new double[0];
+			double centreX = 0;
+			double centreY = 0;
 			while (true) {
-//				double centreX = contours.getNumberArray("centerX", defaultValue)[0];
-				double centreY = contours.getNumberArray("centerY", defaultValue)[0];
-				
+				double[] centreXs = contours.getNumberArray("centerX", defaultValue);
+				double[] centreYs = contours.getNumberArray("centerY", defaultValue);
+
+				if (centreXs.length != 0 && centreYs.length != 0) { 
+					centreX = centreXs[0];
+					centreY = centreYs[0];
+				} else { continue; }				
 				System.out.println(centreX + " - " + centreY);
 				
-				if (Math.abs(frameMidY - centreY) < threshold) {
-					break;
-				} else {
-					ShooterSystem.getInstance().setAngle();
+				if (centreY < frameMidY && frameMidY - centreY > threshold) {
+					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() + 2);
 				}
+				else if (centreY > frameMidY && centreY - frameMidY > threshold) {
+					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() - 2);
+				}
+				else { break; }
 			}
 		});
 	}
