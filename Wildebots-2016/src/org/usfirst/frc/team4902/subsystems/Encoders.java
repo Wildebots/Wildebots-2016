@@ -78,7 +78,7 @@ public class Encoders {
 	 * @return Angle
 	 */
 	public double getShooterAngle() {
-		return (shooterEncoder.get()/497)*360;
+		return (shooterEncoder.get()/(497*18))*360;
 	}
 	
 	public Encoder getShooterEncoder(){

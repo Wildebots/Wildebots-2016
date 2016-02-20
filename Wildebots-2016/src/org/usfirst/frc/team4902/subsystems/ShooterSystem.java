@@ -23,7 +23,7 @@ public class ShooterSystem extends Subsystem {
 
 	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
 
-	public static ShooterSystem getInstance(){
+	public static ShooterSystem getInstance() {
 		return instance;
 	}
 
@@ -31,8 +31,9 @@ public class ShooterSystem extends Subsystem {
 	 * sets the angle of the arm to a specified value
 	 * @param angle The desired angle to set the arm to
 	 */
-	public void setAngle(double angle){
-		shooterArm.setSetpoint(angle);
+	public void setAngle(double angle) {
+		int count = (int) ((angle / 360) * 497 * 18);
+		shooterArm.setSetpoint(count);
 	}
 
 	@Override

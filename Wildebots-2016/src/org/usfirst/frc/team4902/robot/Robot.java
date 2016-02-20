@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
@@ -17,29 +18,30 @@ public class Robot extends IterativeRobot {
 		return instance;
 	}
 	
-    public void robotInit(){
+    public void robotInit() {
     	instance = this;
+    	
+    	Camera.getInstance().startCamera();
     }
     
     public void teleopInit() {
+    	
+    }
+
+	public void teleopPeriodic() {
+		ShooterSystem.getInstance().execute();
+		DriveSystem.getInstance().execute();
+	}
+    
+    public void autonomousInit() {
     	
     }
     
 	public void autonomousPeriodic() {
 
 	}
-
-	public void teleopPeriodic() {
-		ShooterSystem.getInstance().execute();
-		DriveSystem.getInstance().execute();
+	
+	public void disabledInit() {
+		ShooterSystem.getInstance().setAngle(0);
 	}
-
-	@Override
-	public void testInit() {
-		
-	}
-    
-    public void autonomousInit() {
-    	
-    }
 }
