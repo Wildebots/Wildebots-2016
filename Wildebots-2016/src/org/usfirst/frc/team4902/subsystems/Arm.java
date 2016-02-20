@@ -11,7 +11,7 @@ public class Arm extends Subsystem{
 	private final double baseSegmentLength = 16.5 * 2.54;
 	private final double secondSegmentLength = 21.75 * 2.54;
 	
-	private double offset = (1.5 - 1.0) * 2.54;
+	private final double offset = (1.5 - 1.0) * 2.54;
 	
 	
 	
@@ -41,11 +41,33 @@ public class Arm extends Subsystem{
 	}
 	
 	// will be used in autonomous portcullis crossing
-	public void setBaseSegmentAngle(){
+	public void setBaseSegmentAngle(double angle){
+		
+		double threshold = 2.5;
+		
+		double delta = angle - Encoders.getInstance().getBaseSegmentAngle();
+		
+		if (Math.abs(delta)>threshold){
+			baseSegmentMotor.set(delta/Math.abs(delta)/10);
+		}
+		else{
+			baseSegmentMotor.set(0);
+		}
 		
 	}
 	
-	public void setSecondSegmentAngle(){
+	public void setSecondSegmentAngle(double angle){
+		
+		double threshold = 2.5;
+		
+		double delta = angle - Encoders.getInstance().getSecondSegmentAngle();
+		
+		if (Math.abs(delta)>threshold){
+			secondSegmentMotor.set(delta/Math.abs(delta)/10);
+		}
+		else{
+			secondSegmentMotor.set(0);
+		}
 		
 	}
 	
@@ -72,6 +94,11 @@ public class Arm extends Subsystem{
 	public void log() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public Object manipulate(Object o) {
+		System.out.println(o.toString() + " was Manipulated!");
+		return instance.hashCode()*43223523;
 	}
 
 }

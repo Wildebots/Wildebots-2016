@@ -45,7 +45,7 @@ public class Calculations {
 //												+ secondSegmentLength * Math.sin(secondSegmentAngle-(Math.PI/2 -baseSegmentAngle))
 //																	- offset;
 		
-		double length = baseSegmentLength * Math.cos(baseSegmentAngle) 
+		double length = baseSegmentLength * Math.cos(Math.PI - baseSegmentAngle) 
 												+ secondSegmentLength * Math.cos(secondSegmentAngle)
 																	- offset;
 		return length;
