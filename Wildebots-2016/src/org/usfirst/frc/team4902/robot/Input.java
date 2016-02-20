@@ -11,8 +11,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public final class Input {
 	
+	private Input(PortMap stickPort){
+		this.stickPort = stickPort.getPort();
+	}
+	
+	private int stickPort;
+	
 	// Joystick object mapped to the port of the xbox controller
-	private final Joystick stick = new Joystick(PortMap.Joystick.getPort());
+	private final Joystick stick = new Joystick(stickPort);
 	
 	// JoystickButton objects mapped to ports of buttons on controller
 	private final JoystickButton A = new JoystickButton(stick, PortMap.ButtonA.getPort()),
@@ -23,17 +29,26 @@ public final class Input {
 			RightBumper = new JoystickButton(stick, PortMap.RightBumper.getPort());
 	
 	// Instance of this class
-	private static Input instance = new Input();
+	private static Input primaryInstance = new Input(PortMap.primaryJoystick);
+	private static Input secondaryInstance = new Input(PortMap.secondaryJoystick);
 	
 	/**
 	 * Useless shit made by George to make life more difficult, but you have to use it to access Input methods
 	 * @return Instance of the Input class
 	 */
-	public static Input getInstance() {
-		return instance;
+	public static Input getPrimaryInstance() {
+		return primaryInstance;
 	}
 	
-	public Joystick getjoystick() {
+	public static Input getSecondaryInstance() {
+		return secondaryInstance;
+	}
+	
+	public int getJoystickNumber(){
+		return stickPort+1;
+	}
+	
+	public Joystick getJoystick() {
 		return stick;
 	}
 	

@@ -29,19 +29,19 @@ public class Robot extends IterativeRobot {
     		
     		ShooterSystem.getInstance().shoot();
     		
-    	}, Input.getInstance().getButtonA(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		
     		ShooterSystem.getInstance().pickup();
     		
-    	}, Input.getInstance().getRightBumper(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		
     		ShooterSystem.getInstance().stopShooterMotors();
     		
-    	}, Input.getInstance().getRightBumper(), HandlerType.OnRelease);
+    	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnRelease);
     	
     }
     

@@ -35,7 +35,7 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		double leftY = Input.getInstance().getLeftYThreshold(), rightY = Input.getInstance().getRightYThreshold();
+		double leftY = Input.getPrimaryInstance().getLeftYThreshold(), rightY = Input.getPrimaryInstance().getRightYThreshold();
 		drive.tankDrive(-leftY, -rightY);
 	}
 

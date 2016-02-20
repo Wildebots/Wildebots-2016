@@ -6,57 +6,61 @@ import java.util.HashMap;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public final class EventSystem extends Thread {
-	
+
 	/**
 	 * Specifies when the action specified by this Runnable (which is inserted into a Handler) will run.
 	 */
 	public enum HandlerType {
 		OnPress, OnRelease, WhilePressed;
 	}
-	
+
 	private class Handler {
-		
+
 		private Runnable r;
-		
+
 		private HandlerType type;
-		
+
 		public Handler(Runnable r, HandlerType type) {
 			this.r = r;
 			this.type = type;
 		}
-		
+
 		public Runnable getRunnable() {
 			return r;
 		}
-		
+
 		public HandlerType getType() {
 			return type;
 		}
-		
+
 	}
-	
+
 	private HashMap<JoystickButton, ArrayList<Handler>> eventMap = new HashMap<>();
-	
+
 	private HashMap<JoystickButton, Boolean> pressedMap = new HashMap<>();
-	
+
 	private final static EventSystem instance = new EventSystem();
-	
+
 	public static EventSystem getInstance() {
 		return instance;
 	}
-	
+
 	private EventSystem() {
-		Input.getInstance().getButtons().forEach(button -> {
+		Input.getPrimaryInstance().getButtons().forEach(button -> {
+			eventMap.put(button, new ArrayList<Handler>());
+			pressedMap.put(button, false);
+		});
+		Input.getSecondaryInstance().getButtons().forEach(button -> {
 			eventMap.put(button, new ArrayList<Handler>());
 			pressedMap.put(button, false);
 		});
 		this.start();
 	}
-	
+
 	@Override
 	public void run() {
 		while (true) {
-			Input.getInstance().getButtons().forEach(button -> {
+			eventMap.keySet().forEach(button -> {
 				if (button.get()) {
 					eventMap.get(button).forEach(handler -> {
 						if (handler.getType().equals(HandlerType.OnPress)) {
@@ -83,7 +87,7 @@ public final class EventSystem extends Thread {
 			});
 		}
 	}
-	
+
 	/**
 	 * Attaches some code to be run to a button, this code is run when the condition for the HandlerType is met.
 	 * @param r Runnable to be run when triggered
@@ -97,11 +101,11 @@ public final class EventSystem extends Thread {
 			eventMap.get(button).add(new Handler(r,type));
 		}
 	}
-	
+
 	/**
 	 * Gets the number of handlers attached to a button
 	 * @param button The button for which to get the number of handlers
-	 * @return The number of handers attrached to this button
+	 * @return The number of handlers attached to this button
 	 */
 	public int getNumHandlers(JoystickButton button) {
 		if (!eventMap.keySet().contains(button)) {
@@ -111,7 +115,7 @@ public final class EventSystem extends Thread {
 			return eventMap.get(button).size();
 		}
 	}
-	
+
 	/**
 	 * Removes all handlers attached to a button
 	 * @param button The button of which to clear the handlers
@@ -124,12 +128,12 @@ public final class EventSystem extends Thread {
 			eventMap.get(button).clear();
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		String out = "EventSystem ->";
 		for (JoystickButton b : this.eventMap.keySet()) {
-			out += "\n	Button "+Input.getInstance().getButtonName(b)+": Handlers: "+this.getNumHandlers(b);
+			out += "\n	Button "+Input.getPrimaryInstance().getButtonName(b)+": Handlers: "+this.getNumHandlers(b);
 		}
 		return out;
 	}
