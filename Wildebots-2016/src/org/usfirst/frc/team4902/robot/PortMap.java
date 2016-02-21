@@ -14,11 +14,11 @@ public enum PortMap {
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	LeftBumper(5), RightBumper(6),
 	
-	ArmBaseSegmentEncoderA(9),
-	ArmBaseSegmentEncoderB(9),
+	ArmBaseSegmentEncoderA(4),
+	ArmBaseSegmentEncoderB(5),
 	
-	ArmSecondSegmentEncoderA(10),
-	ArmSecondSegmentEncoderB(10),
+	ArmSecondSegmentEncoderA(6),
+	ArmSecondSegmentEncoderB(7),
 	
 	//TODO: Temporary values
 	ArmBaseSegmentMotor(8),
