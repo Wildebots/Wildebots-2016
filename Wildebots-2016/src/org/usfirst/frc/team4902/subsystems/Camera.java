@@ -1,7 +1,8 @@
 package org.usfirst.frc.team4902.subsystems;
 
+import org.usfirst.frc.team4902.robot.Calculations;
+
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
@@ -34,7 +35,7 @@ public class Camera {
 		camera.startAutomaticCapture("cam0");
 	}
 	
-	public void centerCamera() {
+	public void AutoShoot() {
 		Thread centreCamThread = new Thread(() -> {
 			double[] defaultValue = new double[0];
 			double centreX = 0;
@@ -50,13 +51,31 @@ public class Camera {
 				System.out.println(centreX + " - " + centreY);
 				
 				if (centreY < frameMidY && frameMidY - centreY > threshold) {
-					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() + 2);
+					System.out.println("GO UP");
+//					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() + 2);
 				}
 				else if (centreY > frameMidY && centreY - frameMidY > threshold) {
-					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() - 2);
+					System.out.println("GO DOWN");
+//					ShooterSystem.getInstance().setAngle(Encoders.getInstance().getShooterAngle() - 2);
 				}
-				else { break; }
+				else {
+					System.out.println("MIDDLE");
+					break;
+				}
 			}
 		});
+		centreCamThread.setDaemon(true);
+		centreCamThread.start();
+		
+		while (true) {
+			if (centreCamThread.isAlive() != false) { break; }
+		}
+		
+		double distance = Calculations.calcDist();
+		System.out.println("Distance from goal: " + distance);
+		
+		double angle = Calculations.calcAngle(distance);
+		System.out.println("Angle to shoot: " + angle);
+//		ShooterSystem.getInstance().setAngle(angle);
 	}
 }
