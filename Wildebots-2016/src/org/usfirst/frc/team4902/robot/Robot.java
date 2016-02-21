@@ -4,9 +4,16 @@ import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.Arm;
 import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
+import org.usfirst.frc.team4902.subsystems.Encoders;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
+import org.usfirst.frc.team4902.subsystems.Ultrasonics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.buttons.InternalButton;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
  * Main robot class
@@ -30,28 +37,35 @@ public class Robot extends IterativeRobot {
     		
     		ShooterSystem.getInstance().shoot();
     		
-    	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		
     		ShooterSystem.getInstance().pickup();
     		
-    	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getLeftBumper(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		
     		ShooterSystem.getInstance().stopShooterMotors();
     		
-    	}, Input.getSecondaryInstance().getRightBumper(), HandlerType.OnRelease);
+    	}, Input.getSecondaryInstance().getLeftBumper(), HandlerType.OnRelease);
+    	
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		DriveSystem.getInstance().rotate(90);
+//    	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
-    		DriveSystem.getInstance().rotate(90);
-    	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
+    		ShooterSystem.getInstance().shoot(0.3);
+    	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().setAngle(45);
-    	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
     	
+    	InternalButton button = new InternalButton();
+		LiveWindow.addSensor("Encoders", "Shooter Encoder", Encoders.getInstance().getShooterEncoder());
+		SmartDashboard.putData("Bullshit", button);
     }
     
     public void teleopInit() {
@@ -61,7 +75,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 
 	}
-
+	
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();

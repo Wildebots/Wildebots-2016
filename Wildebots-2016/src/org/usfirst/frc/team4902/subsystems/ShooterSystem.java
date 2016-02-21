@@ -70,12 +70,12 @@ public class ShooterSystem extends Subsystem {
 		right.set(speed);
 		MasterTimer.getInstance().schedule(() -> {
 			System.out.println("Kick!");
-			kick.set(-1);
+			kick.set(1);
 			MasterTimer.getInstance().schedule(() -> {
 				System.out.println("Stop!");
 				left.set(0);
 				right.set(0);
-				kick.set(0.2);
+				kick.set(-0.2);
 				MasterTimer.getInstance().schedule(() -> {
 					kick.set(0);
 					isBusy = false;

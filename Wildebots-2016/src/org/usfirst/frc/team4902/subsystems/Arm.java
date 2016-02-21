@@ -14,7 +14,7 @@ public class Arm extends Subsystem{
 	
 	private final double offset = (1.5 - 1.0) * 2.54;
 	
-	private final  double SPEED_ADJUSTMENT = 0.5;
+	private final  double SPEED_ADJUSTMENT = 1;
 	
 	private static Arm instance = new Arm();
 	
@@ -32,17 +32,17 @@ public class Arm extends Subsystem{
 	@Override
 	public void execute() {
 		double baseSegmentSpeed = Input.getSecondaryInstance().getLeftYThreshold() * SPEED_ADJUSTMENT;
-		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold() * SPEED_ADJUSTMENT;
+		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold();
 		
-		if (isInLegalPosition()){
-			baseSegmentMotor.set(baseSegmentSpeed);
-			secondSegmentMotor.set(secondSegmentSpeed);
-		}
-		
-		else{
+//		if (isInLegalPosition()){
 			baseSegmentMotor.set(-baseSegmentSpeed);
-			secondSegmentMotor.set(-secondSegmentSpeed);
-		}
+			secondSegmentMotor.set(secondSegmentSpeed);
+//		}
+//		
+//		else{
+//			baseSegmentMotor.set(-baseSegmentSpeed);
+//			secondSegmentMotor.set(-secondSegmentSpeed);
+//		}
 	}
 	
 	// will be used in autonomous portcullis crossing
