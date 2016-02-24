@@ -16,14 +16,14 @@ public enum PortMap {
 	
 	// TODO: Add real port numbers
 	
-	ArmBaseSegmentEncoderA(9),
-	ArmBaseSegmentEncoderB(9),
+	ArmBaseSegmentEncoderA(4),
+	ArmBaseSegmentEncoderB(5),
 	
-	ArmSecondSegmentEncoderA(10),
-	ArmSecondSegmentEncoderB(10),
+	ArmSecondSegmentEncoderA(6),
+	ArmSecondSegmentEncoderB(7),
 	
-	ShooterEncoderA(11),
-	ShooterEncoderB(11),
+	ShooterEncoderA(8),
+	ShooterEncoderB(9),
 	
 	LeftShooter(4),
 	RightShooter(5),
@@ -31,7 +31,7 @@ public enum PortMap {
 	ArmMotor(7),
 	
 	//TODO: Add real values
-	ArmBaseSegmentMotor(0), ArmSecondSegmentMotor(1),
+	ArmBaseSegmentMotor(8), ArmSecondSegmentMotor(9),
 	
 	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
 	
