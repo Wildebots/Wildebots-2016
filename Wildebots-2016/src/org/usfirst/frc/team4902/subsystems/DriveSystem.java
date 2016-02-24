@@ -1,5 +1,9 @@
 package org.usfirst.frc.team4902.subsystems;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
 
@@ -28,6 +32,7 @@ public class DriveSystem extends Subsystem {
 	private double currentAngle = 0;
 	private double correction = 0;
 	
+	private volatile boolean isBusy = false;
 	
 	public static DriveSystem getInstance() {
 		return instance;
@@ -35,7 +40,10 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		double leftY = Input.getPrimaryInstance().getLeftYThreshold(), rightY = Input.getPrimaryInstance().getRightYThreshold();
+		if (isBusy) return;
+		if (isBusy) return;
+		if (isBusy) return;
+		double leftY = Input.getSecondaryInstance().getLeftYThreshold(), rightY = Input.getSecondaryInstance().getRightYThreshold();
 		drive.tankDrive(-leftY, -rightY);
 	}
 
@@ -44,16 +52,19 @@ public class DriveSystem extends Subsystem {
 	}
 	
 	public void setLeft(double speed) {
+		if (isBusy) return;
 		LeftFront.set(speed);
 		LeftBack.set(speed);
 	}
 	
 	public void setBack(double speed) {
+		if (isBusy) return;
 		RightFront.set(speed);
 		RightBack.set(speed);
 	}
 	
 	public void setSpeed(double speed) {
+		if (isBusy) return;
 		drive.tankDrive(speed, speed);
 	}
 
@@ -65,37 +76,54 @@ public class DriveSystem extends Subsystem {
 	 * Rotates the robot on the place
 	 * @param degrees (negative for clockwise, positive for counterclockwise)
 	 */
-	public void rotate(int degrees) {
-//		Thread RotateThread = new Thread(() -> {
-//			double angle = Gyrometer.getInstance().getAngle();
-//			if (degrees<0)
-//				while (Gyrometer.getInstance().getAngle() < angle+degrees) {
-//					this.tankDrive(-0.5, 0.5);
-//				}
-//			else{
-//				while (Gyrometer.getInstance().getAngle()> angle+degrees){
-//					this.tankDrive(0.5,-0.5);
-//				}
-//			}
-//		});
-//		RotateThread.setDaemon(true);
-//		RotateThread.start();
-		if (Autonomous.inRange(Gyrometer.getInstance().getAngle(), 90, 0.5)) {
+	public Future<Boolean> rotate(int degrees) {
+		if (isBusy) return null;
+		
+		if (ex.isShutdown()) ex = Executors.newFixedThreadPool(1);
+		
+		Thread RotateThread = new Thread(() -> {
+			
+			isBusy = true;
+			
+			double angle = Gyrometer.getInstance().getAngle();
+			double diff = degrees-(angle % 360);
+			
+			if (diff > 180) {
+				diff = diff-360;
+			}
+			
+			diff = Math.toRadians(diff/2);
+			
+			int count = 0;
+			while (!Autonomous.inRange((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle(), degrees, 40)) {
+				System.out.println((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle() + " : " + degrees);
+				System.out.println("ROTATTINGGGGG" + count);
+				count++;
+				drive.tankDrive(Math.sin(diff)*2.0, Math.sin(-diff)*2.0);
+			}
+			
 			drive.tankDrive(0, 0);
-			return;
-		}
+			
+			isBusy = false;
+			
+		});
 		
-		double diff = degrees-(Gyrometer.getInstance().getAngle()%360);
+		RotateThread.setDaemon(true);
 		
-		if (diff > 180) {
-			diff = diff-360;
-		}
+		Future<Boolean> future = ex.submit(RotateThread, null);
 		
-		diff = Math.toRadians(diff/2);
-		drive.tankDrive(Math.sin(diff), Math.sin(-diff));
+		return future;
 		
-		return;
-		
+	}
+	
+	private ExecutorService ex = Executors.newFixedThreadPool(1);
+	
+	/**
+	 * Emergency or when disabled only
+	 */
+	public void stopRotate() {
+		ex.shutdownNow();
+		isBusy = false;
 	}
 	
 	public void driveStraight(double speed){
@@ -117,4 +145,5 @@ public class DriveSystem extends Subsystem {
 			drive.tankDrive(speed,speed-correction);
 		}
 	}
+
 }

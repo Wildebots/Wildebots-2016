@@ -1,13 +1,19 @@
 package org.usfirst.frc.team4902.subsystems;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TimerTask;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
+import org.usfirst.frc.team4902.robot.MasterTimer;
 
 public class Autonomous extends Subsystem {
+	
+	
 
 	public static abstract class AutoAction {
+		
+		public void init() {};
 
 		public abstract boolean isFinished();
 
@@ -22,6 +28,7 @@ public class Autonomous extends Subsystem {
 	private boolean isDone = false;
 
 	public static final ArrayList<AutoAction> ActionList = new ArrayList<>();
+	
 
 	private AutoAction current = (ActionList.isEmpty()) ? null : ActionList.get(0);
 
@@ -43,6 +50,7 @@ public class Autonomous extends Subsystem {
 				return;
 			} else {
 				current = ActionList.get(ActionList.indexOf(current)+1);
+				current.init();
 			}
 		} else {
 			current.execute();
@@ -64,32 +72,11 @@ public class Autonomous extends Subsystem {
 	}
 
 	static {
-		ActionList.addAll(Arrays.asList(new AutoAction() {
-
-			final double distConst = 0.58;
-
-			@Override
-			public boolean isFinished() {
-				return (inRange(Ultrasonics.getInstance().getSideDistance(), distConst, 0.05));
-			}
-
-			@Override
-			public void execute() {
-//				double dist = Ultrasonics.getInstance().getSideDistance();
-//				if (inRange(Gyrometer.getInstance().getAngle(), 90, 0.5)) {
-//					if (inRange(Ultrasonics.getInstance().getForwardDistance(), target, variance))
-//				} else {
-//					DriveSystem.getInstance().rotate(90);
-//				}
-
-			}
-
-			@Override
-			public void exit() {
-				DriveSystem.getInstance().setSpeed(0);
-			}
-		
-	}));
+		ActionList.addAll(Arrays.asList(
+				
+			
+				
+		));
 }
 
 }
