@@ -32,7 +32,9 @@ public class Ultrasonics {
 	 * @return distance in metres
 	 */
 	public double getSideDistance(){
-		return sideSensorIn.getVoltage() / VOLTS_PER_CENTIMETRE;
+		//TODO: Review with Gunvir
+		double dist = sideSensorIn.getVoltage() / VOLTS_PER_CENTIMETRE;
+		return Math.cos(Gyrometer.getInstance().getAngle())*dist;
 	}
 	
 	/**
