@@ -2,6 +2,7 @@ package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.Arm;
+import org.usfirst.frc.team4902.subsystems.Autonomous;
 import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Encoders;
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
     }
     
 	public void autonomousPeriodic() {
-
+		Autonomous.getInstance().execute();
 	}
 	
 	public void teleopPeriodic() {
