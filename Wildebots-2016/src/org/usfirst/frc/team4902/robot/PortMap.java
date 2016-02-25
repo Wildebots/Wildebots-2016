@@ -20,10 +20,6 @@ public enum PortMap {
 	ArmSecondSegmentEncoderA(6),
 	ArmSecondSegmentEncoderB(7),
 	
-	//TODO: Temporary values
-	ArmBaseSegmentMotor(8),
-	ArmSecondSegmentMotor(9),
-	
 	ShooterEncoderA(8),
 	ShooterEncoderB(9),
 	
@@ -32,7 +28,10 @@ public enum PortMap {
 	ArmMotor(6),
 	Kicker(7),
 	
-	LeftFrontMotor(0), LeftBackMotor(2), RightFrontMotor(1), RightBackMotor(3),
+	//TODO: Add real values
+	ArmBaseSegmentMotor(8), ArmSecondSegmentMotor(9),
+	
+	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
 	
 	Gyro(0);
 	

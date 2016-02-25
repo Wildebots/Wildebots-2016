@@ -16,18 +16,19 @@ public class Calculations {
 	 */
 	public static double calcAngle(double distance) {
 		double angle = Math.atan(
-				(Math.pow(BALL_SPEED, 2)+
+				(Math.pow(BALL_SPEED, 2) +
 						Math.sqrt(
-								Math.pow(BALL_SPEED, 4)-
-								GRAVITY*(
-										GRAVITY*Math.pow(distance, 2)+
-										2*HEIGHT*Math.pow(BALL_SPEED, 2)
-										))) / (GRAVITY*distance)
+								Math.pow(BALL_SPEED, 4) -
+								GRAVITY * (
+										GRAVITY * Math.pow(distance, 2) +
+										2 * HEIGHT * Math.pow(BALL_SPEED, 2)
+										))) / (GRAVITY * distance)
 				);
 		return Math.toDegrees(angle);
 	}
 	
 	/**
+	 * All angles are in degrees and lengths are in centimetres
 	 * 
 	 * @param baseSegmentLength length of the first segment of the arm (axle to axle)
 	 * @param secondSegmentLength length of the second, moving segment of the arm (axle to furthest point parallel to arm)
@@ -41,16 +42,13 @@ public class Calculations {
 		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
 		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
 		
-//		double length = baseSegmentLength * Math.cos(baseSegmentAngle) 
-//												+ secondSegmentLength * Math.sin(secondSegmentAngle-(Math.PI/2 -baseSegmentAngle))
-//																	- offset;
+		double length = (baseSegmentLength * Math.cos(180 - baseSegmentAngle))
+				+ (secondSegmentLength * Math.cos(secondSegmentAngle))
+				- offset;
 		
-		double length = baseSegmentLength * Math.cos(Math.PI - baseSegmentAngle) 
-												+ secondSegmentLength * Math.cos(secondSegmentAngle)
-																	- offset;
 		return length;
-		
 	}
+	
 	/**
 	 * Returns a random number
 	 * @return Random int

@@ -2,19 +2,12 @@ package org.usfirst.frc.team4902.robot;
 
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.Arm;
-import org.usfirst.frc.team4902.subsystems.Autonomous;
 import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Encoders;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
-import org.usfirst.frc.team4902.subsystems.Ultrasonics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.buttons.InternalButton;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
  * Main robot class
@@ -70,7 +63,6 @@ public class Robot extends IterativeRobot {
     }
     
 	public void autonomousPeriodic() {
-//		Autonomous.getInstance().execute();
 	}
 	
 	public void teleopPeriodic() {

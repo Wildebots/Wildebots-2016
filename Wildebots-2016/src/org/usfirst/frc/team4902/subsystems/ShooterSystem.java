@@ -41,8 +41,8 @@ public class ShooterSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		double left = Input.getSecondaryInstance().getLeftTrigger(),
-			right = Input.getSecondaryInstance().getRightTrigger();
+		double left = Input.getPrimaryInstance().getLeftTrigger();
+		double right = Input.getPrimaryInstance().getRightTrigger();
 
 		double change = left-right;
 		
