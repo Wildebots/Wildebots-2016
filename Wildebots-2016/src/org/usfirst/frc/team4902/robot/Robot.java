@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
     }
     
 	public void autonomousPeriodic() {
-		Autonomous.getInstance().execute();
+//		Autonomous.getInstance().execute();
 	}
 	
 	public void teleopPeriodic() {
