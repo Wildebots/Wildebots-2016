@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Arm extends Subsystem{
 	
-	// Converted from freedom units (inches) to centimetres
-	private final double baseSegmentLength = 16.5 * 2.54;
-	private final double secondSegmentLength = 21.75 * 2.54;
+	private final double baseSegmentLength = 54.9; // cm
+	private final double secondSegmentLength = 41.9; // cm
 	
-	private final double offset = (1.5 - 1.0) * 2.54;
+	private final double baseStartingAngle = 14.8;
+	private final double secondStartingAngle = 75.2;
 	
-	private final  double SPEED_ADJUSTMENT = 1;
+	private final double offset = 6.2; // cm
+	
+	private final  double SPEED_ADJUSTMENT = 0.8;
 	
 	private static Arm instance = new Arm();
 	
@@ -83,12 +85,17 @@ public class Arm extends Subsystem{
 	
 	public boolean isInLegalPosition(){
 		
-		final double MAX_EXTENSION = 38.1; // 15 inches (max) in centimetres
+		final double MAX_EXTENSION = 38.1; // cm (15 inches (max) in centimetres)
 		
-		double baseSegmentAngle = Encoders.getInstance().getBaseSegmentAngle();
-		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle();
+		double baseSegmentAngle = Encoders.getInstance().getBaseSegmentAngle() + baseStartingAngle;
+		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
+		
+		System.out.print("Base Angle: " + baseSegmentAngle);
+		System.out.print(" - Second Angle: " + secondSegmentAngle);
 		
 		double ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
+		
+		System.out.println(" - Extension: " + ext);
 		
 		if (ext > MAX_EXTENSION-2){
 			return false;
@@ -97,13 +104,10 @@ public class Arm extends Subsystem{
 			return true;
 		}
 	}
-	
-
 
 	@Override
 	public void log() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	public Object manipulate(Object o) {

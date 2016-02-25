@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4902.robot;
 
+import org.usfirst.frc.team4902.subsystems.Arm;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
@@ -26,12 +27,13 @@ public class Robot extends IterativeRobot {
     }
     
 	public void autonomousPeriodic() {
-
+		
 	}
 
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
+		Arm.getInstance().execute();
 	}
 
 	@Override

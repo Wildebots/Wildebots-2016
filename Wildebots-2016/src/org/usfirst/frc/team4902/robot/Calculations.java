@@ -28,6 +28,8 @@ public class Calculations {
 	}
 	
 	/**
+	 * All angles are in degrees and lengths are in centimetres
+	 * 
 	 * @param baseSegmentLength length of the first segment of the arm (axle to axle)
 	 * @param secondSegmentLength length of the second, moving segment of the arm (axle to furthest point parallel to arm)
 	 * @param baseSegmentAngle angle of elevation of the first segment
@@ -40,12 +42,11 @@ public class Calculations {
 		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
 		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
 		
-		double length = (baseSegmentLength * Math.tan(360 - baseSegmentAngle))
-				+ (secondSegmentLength * Math.tan(secondSegmentAngle))
+		double length = (baseSegmentLength * Math.cos(180 - baseSegmentAngle))
+				+ (secondSegmentLength * Math.cos(secondSegmentAngle))
 				- offset;
 		
 		return length;
-		
 	}
 	
 	/**
