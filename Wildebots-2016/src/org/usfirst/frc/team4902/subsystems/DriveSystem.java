@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
 public class DriveSystem extends Subsystem {
+	
+	public static final double FRONT_ULTRASONIC_LIMIT = 20,
+			SIDE_ULTRASONIC_LIMIT = 20;
 
 	private static DriveSystem instance = new DriveSystem();
 
@@ -41,10 +44,20 @@ public class DriveSystem extends Subsystem {
 	@Override
 	public void execute() {
 		if (isBusy) return;
-		if (isBusy) return;
-		if (isBusy) return;
-		double leftY = Input.getSecondaryInstance().getLeftYThreshold(), rightY = Input.getSecondaryInstance().getRightYThreshold();
-		drive.tankDrive(-leftY, -rightY);
+		double leftY = -Input.getSecondaryInstance().getLeftYThreshold(), rightY = -Input.getSecondaryInstance().getRightYThreshold();
+		//TODO: Review limit constants and check logic again?
+		if (isFrontLimit() && (leftY > 0 && rightY > 0)) return;
+		if (isSideLimit() && (leftY > 0 && rightY < 0)) return;
+		
+		drive.tankDrive(leftY, rightY);
+	}
+	
+	public boolean isFrontLimit() {
+		return Autonomous.inRangeVariance(Ultrasonics.getInstance().getForwardDistance(), FRONT_ULTRASONIC_LIMIT, 1);
+	}
+	
+	public boolean isSideLimit() {
+		return Autonomous.inRangeVariance(Ultrasonics.getInstance().getSideDistance(), SIDE_ULTRASONIC_LIMIT, 1);
 	}
 
 	public synchronized void tankDrive(double left, double right) {
