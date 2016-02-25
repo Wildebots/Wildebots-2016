@@ -69,12 +69,21 @@ public class Autonomous extends Subsystem {
 		}
 	}
 
-	public static boolean inRange(double value, double target, double variance) {
+	public static boolean inRangeVariance(double value, double target, double variance) {
 		if (value+variance > target && value-variance < target) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	public static boolean inRange(double value, double lower, double upper) {
+		if (value > lower && value < upper) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 	@Override

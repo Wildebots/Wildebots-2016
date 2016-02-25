@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
+	
+	public static final double LOWER_LIMIT = -85, UPPER_LIMIT = -5;
 
 	private static ShooterSystem instance = new ShooterSystem();
 
@@ -32,14 +34,21 @@ public class ShooterSystem extends Subsystem {
 	 * @param angle The desired angle to set the arm to
 	 */
 	public void setAngle(double angle) {
-		int count = (int) ((angle / 360) * 497 * 18);
+		int count = (int) ((angle / 360.0) * 497 * 18);
+		System.out.println("angle count for pid: "+count+" : angle: "+angle);
 		shooterArm.setSetpoint(count);
 	}
 
 	@Override
 	public void execute() {
-		double left = Input.getSecondaryInstance().getLeftTrigger(), right = Input.getSecondaryInstance().getRightTrigger();
+		double left = Input.getSecondaryInstance().getLeftTrigger(),
+			right = Input.getSecondaryInstance().getRightTrigger();
 
+		double change = left-right;
+		
+		if (change < 0 && this.isLowerLimit()) return;
+		if (change > 0 && this.isUpperLimit()) return;
+		
 		armMotor.set(left-right);
 
 		//		if (left > right) {
@@ -50,6 +59,14 @@ public class ShooterSystem extends Subsystem {
 		//			armMotor.set(0);
 		//		}
 
+	}
+	 
+	public boolean isLowerLimit() {
+		return Autonomous.inRangeVariance(Encoders.getInstance().getShooterAngle(), LOWER_LIMIT, 1);
+	}
+	
+	public boolean isUpperLimit() {
+		return Autonomous.inRangeVariance(Encoders.getInstance().getShooterAngle(), UPPER_LIMIT, 1);
 	}
 
 	public void stopShooterMotors() {

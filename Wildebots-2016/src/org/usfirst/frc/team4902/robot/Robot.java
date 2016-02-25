@@ -63,10 +63,6 @@ public class Robot extends IterativeRobot {
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().setAngle(45);
     	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
-    	
-    	InternalButton button = new InternalButton();
-		LiveWindow.addSensor("Encoders", "Shooter Encoder", Encoders.getInstance().getShooterEncoder());
-		SmartDashboard.putData("Bullshit", button);
     }
     
     public void teleopInit() {
@@ -91,4 +87,17 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	
     }
+    
+    @Override
+    public void testPeriodic() {
+    	ShooterSystem.getInstance().execute();
+    	System.out.println("angle: "+Encoders.getInstance().getShooterAngle());
+    }
+    
+    @Override
+    public void disabledInit() {
+    	Encoders.getInstance().resetArmEncoders();
+    	Encoders.getInstance().resetShooterEncoder();
+    }
+    
 }
