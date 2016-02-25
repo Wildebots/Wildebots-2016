@@ -44,12 +44,12 @@ public class DriveSystem extends Subsystem {
 	@Override
 	public void execute() {
 		if (isBusy) return;
-		double leftY = -Input.getPrimaryInstance().getLeftYThreshold(), rightY = -Input.getPrimaryInstance().getRightYThreshold();
+		double leftY = Input.getPrimaryInstance().getLeftYThreshold(), rightY = Input.getPrimaryInstance().getRightYThreshold();
 		//TODO: Review limit constants and check logic again?
 //		if (isFrontLimit() && (leftY > 0 && rightY > 0)) return;
 //		if (isSideLimit() && (leftY > 0 && rightY < 0)) return;
 		
-		drive.tankDrive(leftY, rightY);
+		drive.tankDrive(-leftY, -rightY);
 	}
 	
 	public boolean isFrontLimit() {

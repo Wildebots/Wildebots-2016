@@ -31,7 +31,7 @@ public enum PortMap {
 	//TODO: Add real values
 	ArmBaseSegmentMotor(8), ArmSecondSegmentMotor(9),
 	
-	LeftFrontMotor(0), LeftBackMotor(1), RightFrontMotor(2), RightBackMotor(3),
+	LeftFrontMotor(0), LeftBackMotor(2), RightFrontMotor(1), RightBackMotor(3),
 	
 	Gyro(0);
 	

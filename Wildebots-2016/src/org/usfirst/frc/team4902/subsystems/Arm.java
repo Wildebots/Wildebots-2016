@@ -11,10 +11,10 @@ public class Arm extends Subsystem{
 	private final double baseSegmentLength = 54.9; // cm
 	private final double secondSegmentLength = 41.9; // cm
 	
-	private final double baseStartingAngle = 14.8;
-	private final double secondStartingAngle = 75.2;
+	private final double baseStartingAngle = 20.25;
+	private final double secondStartingAngle = 69.75;
 	
-	private final  double SPEED_ADJUSTMENT = 1;
+	private final  double SPEED_ADJUSTMENT = 0.01;
 
 	private final double offset = 6.2; // cm
 	
@@ -41,12 +41,36 @@ public class Arm extends Subsystem{
 			secondSegmentMotor.set(secondSegmentSpeed);
 		}
 		
-		else{
+		else {
 			System.out.println("REACHED LIMIT!");
+//			if (Input.getSecondaryInstance())
 			baseSegmentMotor.set(0);
 			secondSegmentMotor.set(0);
 		}
 	}
+	
+	public boolean isInLegalPosition(){
+		
+		final double MAX_EXTENSION = 38.1; // cm (15 inches max)
+		
+		double baseSegmentAngle = 180 - (Encoders.getInstance().getBaseSegmentAngle() + baseStartingAngle);
+		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
+		
+		System.out.print("Base Angle: " + baseSegmentAngle);
+		System.out.print(" : Second Angle: " + secondSegmentAngle);
+		
+		double ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
+		
+		System.out.println(" - Extension: " + ext);
+		
+		if (ext > MAX_EXTENSION-2){
+			return false;
+		} 
+		else {
+			return true;
+		}
+	}
+	
 	
 	// Will be used in autonomous portcullis crossing
 	public void setBaseSegmentAngle(double angle){
@@ -81,28 +105,6 @@ public class Arm extends Subsystem{
 		
 //		secondSegmentPID.setSetpoint(angle);
 		
-	}
-	
-	public boolean isInLegalPosition(){
-		
-		final double MAX_EXTENSION = 38.1; // cm (15 inches (max) in centimetres)
-		
-		double baseSegmentAngle = Encoders.getInstance().getBaseSegmentAngle() + baseStartingAngle;
-		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
-		
-		System.out.print("Base Angle: " + baseSegmentAngle);
-		System.out.print(" - Second Angle: " + secondSegmentAngle);
-		
-		double ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
-		
-		System.out.println(" - Extension: " + ext);
-		
-		if (ext > MAX_EXTENSION-2){
-			return false;
-		} 
-		else {
-			return true;
-		}
 	}
 
 	@Override

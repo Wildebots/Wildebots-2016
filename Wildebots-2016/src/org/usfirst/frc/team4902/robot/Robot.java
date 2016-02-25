@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 //    	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
-    		ShooterSystem.getInstance().shoot(0.3);
+    		ShooterSystem.getInstance().shoot(0.4);
     	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
@@ -63,12 +63,13 @@ public class Robot extends IterativeRobot {
     }
     
 	public void autonomousPeriodic() {
+		
 	}
 	
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
-		Arm.getInstance().execute();
+//		Arm.getInstance().execute();
 	}
 
 	@Override

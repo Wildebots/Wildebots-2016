@@ -37,12 +37,11 @@ public class Calculations {
 	 * @param offset the distance between where the first arm segment starts and the edge of the robot, minus any extra extension from arm thickness
 	 * @return the length of extension from the base
 	 */
-	
 	public static double getArmExtension(double baseSegmentLength, double secondSegmentLength, double baseSegmentAngle, double secondSegmentAngle, double offset){
 		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
 		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
 		
-		double length = (baseSegmentLength * Math.cos(180 - baseSegmentAngle))
+		double length = (baseSegmentLength * Math.cos(baseSegmentAngle))
 				+ (secondSegmentLength * Math.cos(secondSegmentAngle))
 				- offset;
 		
