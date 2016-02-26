@@ -11,15 +11,15 @@ public class Arm extends Subsystem {
 	private final double baseSegmentLength = 41.9; // cm
 	private final double secondSegmentLength = 54.9; // cm
 	
-	private final double baseStartingAngle = 14.80;
-	private final double secondStartingAngle = 69.90;
+	private final double baseStartingAngle = 14.8; //144mm and 37 mm
+	private final double secondStartingAngle = 75.2;
 
 	private final double BASE_SPEED_ADJUSTMENT = 0.4;
 	private final double SECOND_SPEED_ADJUSTMENT = 0.5;
 
-	private final double offset = 6.2; // cm
+	private final double offset = 6.5; // cm
 	
-	private final double firstSlow  = 25.4; // cm
+	private final double firstSlow  = 22.0; // cm
 	
 	final double MAX_EXTENSION = 38.1; // cm (15 inches max)
 	
@@ -39,16 +39,28 @@ public class Arm extends Subsystem {
 		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
 		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold() * SECOND_SPEED_ADJUSTMENT;
 		
-		double secondAngle = Encoders.getInstance().getSecondSegmentAngle();
-				
-		if (this.isInLegalPosition()) {
-			baseSegmentMotor.set(baseSegmentSpeed);
-			if (ext > firstSlow && secondSegmentSpeed > 0) {
+		if (Math.abs(secondSegmentSpeed) < 0.08) {
+			if (Encoders.getInstance().getBaseSegmentAngle() > 90) {
+				secondSegmentMotor.set(0.05);
+				return;
+			}
+			else if (Encoders.getInstance().getBaseSegmentAngle() < 90) {
+				secondSegmentMotor.set(-0.05);
+				return;
+			}
+		}
+		
+		double secondAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
+		
+		if (this.isInLegalPosition()) {			
+			if (ext > firstSlow) {
 				System.out.println("SLOWING DOWN");
 				secondSegmentMotor.set(secondSegmentSpeed / 2.0);
+				baseSegmentMotor.set(baseSegmentSpeed / 2.0);
 			}
 			else {
 				secondSegmentMotor.set(secondSegmentSpeed);
+				baseSegmentMotor.set(baseSegmentSpeed);
 			}
 		}
 		else {
@@ -57,19 +69,18 @@ public class Arm extends Subsystem {
 			
 			if (baseSegmentSpeed <= 0) {
 				baseSegmentMotor.set(baseSegmentSpeed);
+			} else {
+				baseSegmentMotor.set(-0.1);
 			}
 			
-			if (secondAngle <= 0 && secondSegmentSpeed >= 0) {
+			if (secondAngle >= 180 && secondSegmentSpeed >= 0) {
 				secondSegmentMotor.set(secondSegmentSpeed);
-			}
-			
-			else if (secondAngle >= 0 && secondSegmentSpeed <= 0) {
+				return;
+			} else if (secondAngle <= 180 && secondSegmentSpeed <= 0) {
 				secondSegmentMotor.set(secondSegmentSpeed);
-			}
-			
-			else {
-				baseSegmentMotor.set(0);
-				secondSegmentMotor.set(0);
+				return;
+			} else {
+				secondSegmentMotor.set(-0.1);
 			}
 		}
 	}
@@ -80,9 +91,11 @@ public class Arm extends Subsystem {
 			
 		ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
 		
-//		System.out.println("Extension: " + ext);
+		System.out.print("Base:" + baseSegmentAngle);
+		System.out.print(" - Second: " + secondSegmentAngle);
+		System.out.println(" - Extension: " + ext);
 		
-		if (ext > MAX_EXTENSION-6){
+		if (ext > (MAX_EXTENSION-10)) {
 			return false;
 		} 
 		else {
