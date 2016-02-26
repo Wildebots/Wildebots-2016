@@ -35,9 +35,8 @@ public class Robot extends IterativeRobot {
     	
     	Camera.startCamera();
     	
-    	auto.addDefault("Enabled", new Boolean(true));
-    	
-    	auto.addObject("Disabled", new Boolean(false));
+    	// Disable subsystems here
+    	Arm.getInstance().disable();
     	
     	SmartDashboard.putData("Auto", auto);
     	
@@ -111,7 +110,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
-//		Arm.getInstance().execute();
+		Arm.getInstance().execute();
 	}
 
 	@Override
