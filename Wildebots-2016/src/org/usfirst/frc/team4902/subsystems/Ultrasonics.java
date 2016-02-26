@@ -33,12 +33,12 @@ public class Ultrasonics {
 	 */
 	public double getSideDistance(){
 		//TODO: Review with Gunvir
-		double dist = sideSensorIn.getVoltage() / VOLTS_PER_CENTIMETRE;
-		return Math.cos(Gyrometer.getInstance().getAngle())*dist;
+		return sideSensorIn.getVoltage() / VOLTS_PER_CENTIMETRE;
+//		Math.cos(Gyrometer.getInstance().getAngle())*dist;
 	}
 	
 	/**
-	 * Interprets the analog output from the ultrasonic and calculates distance from it
+	 * Interprets the analog output from the ultrasoni-c and calculates distance from it
 	 * @return distance in metres
 	 */
 	public double getForwardDistance(){

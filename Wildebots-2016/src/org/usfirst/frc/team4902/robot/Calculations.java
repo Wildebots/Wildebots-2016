@@ -41,6 +41,9 @@ public class Calculations {
 		baseSegmentAngle = Math.toRadians(baseSegmentAngle);
 		secondSegmentAngle = Math.toRadians(secondSegmentAngle);
 		
+		System.out.print("Base: " + (baseSegmentLength * Math.cos(baseSegmentAngle)));
+		System.out.println("Second: " + (secondSegmentLength * Math.cos(secondSegmentAngle)));
+		
 		double length = (baseSegmentLength * Math.cos(baseSegmentAngle))
 				+ (secondSegmentLength * Math.cos(secondSegmentAngle))
 				- offset;

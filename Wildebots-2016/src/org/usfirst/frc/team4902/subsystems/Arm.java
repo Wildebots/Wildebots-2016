@@ -39,44 +39,39 @@ public class Arm extends Subsystem{
 		
 		double secondAngle = Encoders.getInstance().getSecondSegmentAngle();
 		
-		if (this.isInLegalPosition()) {
+//		if (this.isInLegalPosition()) {
 			baseSegmentMotor.set(baseSegmentSpeed);
 			secondSegmentMotor.set(secondSegmentSpeed);
-		}
+//		}
 		
-		else {
-			
-			System.out.println("REACHED LIMIT!");
-			
-			if (baseSegmentSpeed >= 0) {
-				baseSegmentMotor.set(baseSegmentSpeed);
-			}
-			
-			if (secondAngle <= 0 && secondSegmentSpeed >= 0) {
-				secondSegmentMotor.set(secondSegmentSpeed);
-			}
-			
-			else if (secondAngle >= 0 && secondSegmentSpeed <= 0) {
-				secondSegmentMotor.set(secondSegmentSpeed);
-			}
-			
-			else {
-				baseSegmentMotor.set(0);
-				secondSegmentMotor.set(0);
-			}
-		}
+//		else {
+//			
+//			System.out.println("REACHED LIMIT!");
+//			
+//			if (baseSegmentSpeed <= 0) {
+//				baseSegmentMotor.set(baseSegmentSpeed);
+//			}
+//			
+//			if (secondAngle <= 0 && secondSegmentSpeed >= 0) {
+//				secondSegmentMotor.set(secondSegmentSpeed);
+//			}
+//			
+//			else if (secondAngle >= 0 && secondSegmentSpeed <= 0) {
+//				secondSegmentMotor.set(secondSegmentSpeed);
+//			}
+//			
+//			else {
+//				baseSegmentMotor.set(0);
+//				secondSegmentMotor.set(0);
+//			}
+//		}
 	}
 	
 	public boolean isInLegalPosition() {
 		double baseSegmentAngle = 180 - (Encoders.getInstance().getBaseSegmentAngle() + baseStartingAngle);
 		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
-		
-		System.out.print("Base Angle: " + baseSegmentAngle);
-		System.out.print(" : Second Angle: " + secondSegmentAngle);
-		
+				
 		double ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
-		
-		System.out.println(" - Extension: " + ext);
 		
 		if (ext > MAX_EXTENSION-2){
 			return false;

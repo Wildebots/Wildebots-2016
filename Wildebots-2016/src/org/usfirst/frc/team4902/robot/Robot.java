@@ -8,6 +8,7 @@ import org.usfirst.frc.team4902.subsystems.Camera;
 import org.usfirst.frc.team4902.subsystems.DriveSystem;
 import org.usfirst.frc.team4902.subsystems.Encoders;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
+import org.usfirst.frc.team4902.subsystems.Ultrasonics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -82,7 +83,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void teleopInit() {
-    	
+    	Encoders.getInstance().resetArmEncoders();
     }
     
 	public void autonomousPeriodic() {
@@ -90,9 +91,10 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic() {
-		ShooterSystem.getInstance().execute();
-		DriveSystem.getInstance().execute();
-		Arm.getInstance().execute();
+//		ShooterSystem.getInstance().execute();
+//		DriveSystem.getInstance().execute();
+//		Arm.getInstance().execute();
+		System.out.println("Front: "+ Ultrasonics.getInstance().getForwardDistance()+ " Side: "+Ultrasonics.getInstance().getSideDistance());
 	}
 
 	@Override
