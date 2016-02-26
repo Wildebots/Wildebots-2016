@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Arm extends Subsystem {
 	
-	private final double baseSegmentLength = 54.9; // cm
-	private final double secondSegmentLength = 41.9; // cm
+	private final double baseSegmentLength = 41.9; // cm
+	private final double secondSegmentLength = 54.9; // cm
 	
 	private final double baseStartingAngle = 14.80;
 	private final double secondStartingAngle = 69.90;
