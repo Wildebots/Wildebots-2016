@@ -4,24 +4,26 @@ import org.usfirst.frc.team4902.robot.Calculations;
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDCommand;
 
-public class Arm extends Subsystem{
+public class Arm extends Subsystem {
 	
 	private final double baseSegmentLength = 54.9; // cm
 	private final double secondSegmentLength = 41.9; // cm
 	
-	private final double baseStartingAngle = 20.25; // Degrees
-	private final double secondStartingAngle = 69.75;
+	private final double baseStartingAngle = 20.10;
+	private final double secondStartingAngle = 69.90;
 
 	private final double BASE_SPEED_ADJUSTMENT = 0.4;
 	private final double SECOND_SPEED_ADJUSTMENT = 0.5;
 
 	private final double offset = 6.2; // cm
 	
+	private final double firstSlow  = 25.4; // cm
+	
 	final double MAX_EXTENSION = 38.1; // cm (15 inches max)
+	
+	double ext;
 	
 	private static Arm instance = new Arm();
 	
@@ -38,42 +40,46 @@ public class Arm extends Subsystem{
 		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold() * SECOND_SPEED_ADJUSTMENT;
 		
 		double secondAngle = Encoders.getInstance().getSecondSegmentAngle();
-		
-//		if (this.isInLegalPosition()) {
+				
+		if (this.isInLegalPosition()) {
 			baseSegmentMotor.set(baseSegmentSpeed);
-			secondSegmentMotor.set(secondSegmentSpeed);
-//		}
-		
-//		else {
-//			
-//			System.out.println("REACHED LIMIT!");
-//			
-//			if (baseSegmentSpeed <= 0) {
-//				baseSegmentMotor.set(baseSegmentSpeed);
-//			}
-//			
-//			if (secondAngle <= 0 && secondSegmentSpeed >= 0) {
-//				secondSegmentMotor.set(secondSegmentSpeed);
-//			}
-//			
-//			else if (secondAngle >= 0 && secondSegmentSpeed <= 0) {
-//				secondSegmentMotor.set(secondSegmentSpeed);
-//			}
-//			
-//			else {
-//				baseSegmentMotor.set(0);
-//				secondSegmentMotor.set(0);
-//			}
-//		}
+			if (ext > firstSlow && secondSegmentSpeed > 0) {
+				secondSegmentMotor.set(secondSegmentSpeed / 2);
+			}
+			else {
+				secondSegmentMotor.set(secondSegmentSpeed);
+			}
+		}
+		else {
+			
+			System.out.println("REACHED LIMIT!");
+			
+			if (baseSegmentSpeed <= 0) {
+				baseSegmentMotor.set(baseSegmentSpeed);
+			}
+			
+			if (secondAngle <= 0 && secondSegmentSpeed >= 0) {
+				secondSegmentMotor.set(secondSegmentSpeed);
+			}
+			
+			else if (secondAngle >= 0 && secondSegmentSpeed <= 0) {
+				secondSegmentMotor.set(secondSegmentSpeed);
+			}
+			
+			else {
+				baseSegmentMotor.set(0);
+				secondSegmentMotor.set(0);
+			}
+		}
 	}
 	
 	public boolean isInLegalPosition() {
 		double baseSegmentAngle = 180 - (Encoders.getInstance().getBaseSegmentAngle() + baseStartingAngle);
 		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
+			
+		ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
 				
-		double ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
-		
-		if (ext > MAX_EXTENSION-2){
+		if (ext > MAX_EXTENSION-6){
 			return false;
 		} 
 		else {
@@ -83,7 +89,7 @@ public class Arm extends Subsystem{
 
 	@Override
 	public void log() {
-		// TODO Auto-generated method stub
+		
 	}
 	
 	public Object manipulate(Object o) {
