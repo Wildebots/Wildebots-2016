@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4902.robot;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -48,6 +50,15 @@ public final class Input {
 
 	public int getJoystickNumber(){
 		return stickPort+1;
+	}
+	
+	public void rumbleTime(float intensity, Duration time) {
+		this.rumble(intensity);
+		MasterTimer.getInstance().schedule(() -> this.rumble(0),time);
+	}
+	
+	public void rumble(float intensity) {
+		this.stick.setRumble(RumbleType.kLeftRumble, intensity);
 	}
 
 	public Joystick getJoystick() {

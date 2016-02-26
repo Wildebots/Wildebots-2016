@@ -93,6 +93,8 @@ public class ShooterSystem extends Subsystem {
 	public void shoot(double speed) {
 		if (Robot.getInstance().isDisabled() || this.isDisabled() || isBusy) return;
 		isBusy = true;
+		Input.getPrimaryInstance().rumbleTime(0.5f, Duration.ofMillis(2000));
+		Input.getSecondaryInstance().rumbleTime(0.5f, Duration.ofMillis(2000));
 		System.out.println("Firing!");
 		left.set(-speed);
 		right.set(speed);
