@@ -31,6 +31,11 @@ public class Robot extends IterativeRobot {
     	Camera.startCamera();
     	
     	EventSystem.getInstance().addHandler(() -> {
+    		Encoders.getInstance().resetArmEncoders();
+    		Encoders.getInstance().resetShooterEncoder();
+    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
     		
     		ShooterSystem.getInstance().shoot();
     		
@@ -62,7 +67,7 @@ public class Robot extends IterativeRobot {
     	
     	EventSystem.getInstance().addHandler(() -> {
     		DriveSystem.getInstance().rotate(-90);
-    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
+    	}, Input.getPrimaryInstance().getButtonB(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().setAngle(-80);
@@ -81,20 +86,17 @@ public class Robot extends IterativeRobot {
 //    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
     	
     }
-    
-    public void teleopInit() {
-    	Encoders.getInstance().resetArmEncoders();
-    }
-    
+        
 	public void autonomousPeriodic() {
 		
 	}
 	
 	public void teleopPeriodic() {
-//		ShooterSystem.getInstance().execute();
-//		DriveSystem.getInstance().execute();
-//		Arm.getInstance().execute();
-		System.out.println("Front: "+ Ultrasonics.getInstance().getForwardDistance()+ " Side: "+Ultrasonics.getInstance().getSideDistance());
+		ShooterSystem.getInstance().execute();
+		DriveSystem.getInstance().execute();
+		Arm.getInstance().execute();
+//		System.out.println("Base: "+Encoders.getInstance().getBaseSegmentAngle() + " Second Segment: "+Encoders.getInstance().getSecondSegmentAngle()); 
+//		System.out.println("Front: "+ Ultrasonics.getInstance().getForwardDistance()+ " Side: "+Ultrasonics.getInstance().getSideDistance());
 	}
 
 	@Override

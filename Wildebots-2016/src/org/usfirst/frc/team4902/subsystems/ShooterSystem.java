@@ -49,6 +49,8 @@ public class ShooterSystem extends Subsystem {
 		if (change < 0 && this.isLowerLimit()) return;
 		if (change > 0 && this.isUpperLimit()) return;
 		
+		System.out.println("Angle: "+Encoders.getInstance().getShooterAngle() + " lower: "+isLowerLimit()+ " upper: "+isUpperLimit());
+		
 		armMotor.set(left-right);
 
 		//		if (left > right) {
