@@ -44,7 +44,8 @@ public class Arm extends Subsystem {
 		if (this.isInLegalPosition()) {
 			baseSegmentMotor.set(baseSegmentSpeed);
 			if (ext > firstSlow && secondSegmentSpeed > 0) {
-				secondSegmentMotor.set(secondSegmentSpeed / 2);
+				System.out.println("SLOWING DOWN");
+				secondSegmentMotor.set(secondSegmentSpeed / 2.0);
 			}
 			else {
 				secondSegmentMotor.set(secondSegmentSpeed);
@@ -78,7 +79,9 @@ public class Arm extends Subsystem {
 		double secondSegmentAngle = Encoders.getInstance().getSecondSegmentAngle() + secondStartingAngle;
 			
 		ext =  Calculations.getArmExtension(baseSegmentLength, secondSegmentLength, baseSegmentAngle, secondSegmentAngle, offset);
-				
+		
+//		System.out.println("Extension: " + ext);
+		
 		if (ext > MAX_EXTENSION-6){
 			return false;
 		} 

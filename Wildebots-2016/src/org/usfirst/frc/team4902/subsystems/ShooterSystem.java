@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
 	
-	public static final double LOWER_LIMIT = -85, UPPER_LIMIT = -5;
+	public static final double LOWER_LIMIT = -70, UPPER_LIMIT = 0;
 
 	private static ShooterSystem instance = new ShooterSystem();
 
@@ -23,8 +23,12 @@ public class ShooterSystem extends Subsystem {
 			kick = new Victor(PortMap.Kicker.getPort()),
 			armMotor = new Victor(PortMap.ArmMotor.getPort());
 
-	private PIDController shooterArm = new PIDController(0.05, 0.0, 0.5, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
+	private PIDController shooterArm = new PIDController(0.1, 0.1, 0.1, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
 
+	public ShooterSystem() {
+//		shooterArm.enable();
+	}
+	
 	public static ShooterSystem getInstance(){
 		return instance;
 	}
@@ -45,30 +49,28 @@ public class ShooterSystem extends Subsystem {
 		double right = Input.getPrimaryInstance().getRightTrigger();
 
 		double change = left-right;
-		
-		if (change < 0 && this.isLowerLimit()) return;
-		if (change > 0 && this.isUpperLimit()) return;
+				
+		if (change > 0 && this.isLowerLimit()) {
+			armMotor.set(-0.2);
+			return;
+		}
+		if (change < 0 && this.isUpperLimit()) {
+			armMotor.set(0);
+			return;
+		}
 		
 		System.out.println("Angle: "+Encoders.getInstance().getShooterAngle() + " lower: "+isLowerLimit()+ " upper: "+isUpperLimit());
 		
-		armMotor.set(left-right);
-
-		//		if (left > right) {
-		//			armMotor.set(-left);
-		//		} else if (right > left) {
-		//			armMotor.set(right);
-		//		} else if (left == 0 && right == 0) {
-		//			armMotor.set(0);
-		//		}
+		armMotor.set(change);
 
 	}
 	 
 	public boolean isLowerLimit() {
-		return Autonomous.inRangeVariance(Encoders.getInstance().getShooterAngle(), LOWER_LIMIT, 1);
+		return Encoders.getInstance().getShooterAngle() < LOWER_LIMIT;
 	}
 	
 	public boolean isUpperLimit() {
-		return Autonomous.inRangeVariance(Encoders.getInstance().getShooterAngle(), UPPER_LIMIT, 1);
+		return Encoders.getInstance().getShooterAngle() > UPPER_LIMIT;
 	}
 
 	public void stopShooterMotors() {

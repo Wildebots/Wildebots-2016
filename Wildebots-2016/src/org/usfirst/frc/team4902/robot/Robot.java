@@ -30,10 +30,10 @@ public class Robot extends IterativeRobot {
     	
     	Camera.startCamera();
     	
-    	EventSystem.getInstance().addHandler(() -> {
-    		Encoders.getInstance().resetArmEncoders();
-    		Encoders.getInstance().resetShooterEncoder();
-    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		Encoders.getInstance().resetArmEncoders();
+//    		Encoders.getInstance().resetShooterEncoder();
+//    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		
@@ -61,17 +61,17 @@ public class Robot extends IterativeRobot {
     		ShooterSystem.getInstance().shoot(0.4);
     	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
-    	EventSystem.getInstance().addHandler(() -> {
-    		ShooterSystem.getInstance().setAngle(45);
-    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		ShooterSystem.getInstance().setAngle(45);
+//    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
     	
-    	EventSystem.getInstance().addHandler(() -> {
-    		DriveSystem.getInstance().rotate(-90);
-    	}, Input.getPrimaryInstance().getButtonB(), HandlerType.OnPress);
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		DriveSystem.getInstance().rotate(-90);
+//    	}, Input.getPrimaryInstance().getButtonB(), HandlerType.OnPress);
     	
-    	EventSystem.getInstance().addHandler(() -> {
-    		ShooterSystem.getInstance().setAngle(-80);
-    	}, Input.getSecondaryInstance().getButtonX(), HandlerType.OnPress);
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		ShooterSystem.getInstance().setAngle(-80);
+//    	}, Input.getSecondaryInstance().getButtonX(), HandlerType.OnPress);
     	
 //    	EventSystem.getInstance().addHandler(() -> {
 //    		double angle = Encoders.getInstance().getShooterAngle();
@@ -86,9 +86,14 @@ public class Robot extends IterativeRobot {
 //    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
     	
     }
+    
+    volatile boolean stop = false;
         
 	public void autonomousPeriodic() {
-		
+		while (!stop) {
+			DriveSystem.getInstance().setSpeed(0.8);
+		}
+		DriveSystem.getInstance().setSpeed(0);
 	}
 	
 	public void teleopPeriodic() {
@@ -105,7 +110,9 @@ public class Robot extends IterativeRobot {
 	}
     
     public void autonomousInit() {
-    	
+    	MasterTimer.getInstance().schedule(() -> {
+    		stop = true;
+    	}, Duration.ofSeconds(3));
     }
     
     @Override
