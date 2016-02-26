@@ -10,12 +10,16 @@ import org.usfirst.frc.team4902.subsystems.Encoders;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Main robot class
  * Starting point of program
  */
 public class Robot extends IterativeRobot {
+	
+	SendableChooser auto = new SendableChooser();
 	
 	private static Robot instance;
 	
@@ -30,6 +34,12 @@ public class Robot extends IterativeRobot {
     	instance = this;
     	
     	Camera.startCamera();
+    	
+    	auto.addDefault("Enabled", new Boolean(true));
+    	
+    	auto.addObject("Disabled", new Boolean(false));
+    	
+    	SmartDashboard.putData("Auto", auto);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		noShooterLimit = true;
@@ -56,8 +66,7 @@ public class Robot extends IterativeRobot {
     		ShooterSystem.getInstance().shoot(0.4);
     	}, Input.getSecondaryInstance().getButtonA(), HandlerType.OnPress);
     	
-    	
-//    	~~ DO NOT ENABLE! ~~
+//    	~~ DO NOT ENABLE! (Ben, Quinton, Victor, this means you) ~~
     	
 //    	EventSystem.getInstance().addHandler(() -> {
 //    		ShooterSystem.getInstance().setAngle(-60);
@@ -88,10 +97,15 @@ public class Robot extends IterativeRobot {
     volatile boolean stop = false;
         
 	public void autonomousPeriodic() {
+			if (!this.getAuto()) return;
 		while (!stop) {
 			DriveSystem.getInstance().setSpeed(0.8);
 		}
 		DriveSystem.getInstance().setSpeed(0);
+	}
+	
+	public Boolean getAuto() {
+		return Boolean.class.cast(auto.getSelected());
 	}
 	
 	public void teleopPeriodic() {

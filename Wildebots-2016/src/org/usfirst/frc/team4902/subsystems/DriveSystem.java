@@ -43,7 +43,7 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		if (isBusy) return;
+		if (isBusy || this.isDisabled()) return;
 		double leftY = Input.getPrimaryInstance().getLeftYThreshold(), rightY = Input.getPrimaryInstance().getRightYThreshold();
 		//TODO: Review limit constants and check logic again?
 //		if (isFrontLimit() && (leftY > 0 && rightY > 0)) return;
@@ -59,25 +59,21 @@ public class DriveSystem extends Subsystem {
 	public boolean isSideLimit() {
 		return Autonomous.inRangeVariance(Ultrasonics.getInstance().getSideDistance(), SIDE_ULTRASONIC_LIMIT, 1);
 	}
-
-	public synchronized void tankDrive(double left, double right) {
-		drive.tankDrive(left, right);
-	}
 	
 	public void setLeft(double speed) {
-		if (isBusy) return;
+		if (isBusy || this.isDisabled()) return;
 		LeftFront.set(speed);
 		LeftBack.set(speed);
 	}
 	
 	public void setBack(double speed) {
-		if (isBusy) return;
+		if (isBusy || this.isDisabled()) return;
 		RightFront.set(speed);
 		RightBack.set(speed);
 	}
 	
 	public void setSpeed(double speed) {
-		if (isBusy) return;
+		if (isBusy || this.isDisabled()) return;
 		drive.tankDrive(speed, speed);
 	}
 
@@ -90,7 +86,7 @@ public class DriveSystem extends Subsystem {
 	 * @param degrees (negative for clockwise, positive for counterclockwise)
 	 */
 	public Future<Boolean> rotate(int degrees) {
-		if (isBusy) return null;
+		if (isBusy || this.isDisabled()) return null;
 		
 		if (ex.isShutdown()) ex = Executors.newFixedThreadPool(1);
 		
@@ -141,12 +137,16 @@ public class DriveSystem extends Subsystem {
 	
 	public void driveStraight(double speed){
 		
+		if (this.isDisabled()) return;
+		
 		double angle = Math.toRadians(Gyrometer.getInstance().getAngle());
 		
 		drive.tankDrive(speed + Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT, speed - Math.sin(angle) * ADJUSTMENT_SPEED_CONSTANT);
 	}
 	
 	public void driveStraightTwo(double speed){
+		
+		if (this.isDisabled()) return;
 		
 		lastAngle = currentAngle;
 		currentAngle = Math.toRadians(Gyrometer.getInstance().getAngle());

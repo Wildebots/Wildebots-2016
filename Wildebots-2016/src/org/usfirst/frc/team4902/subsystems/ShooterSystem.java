@@ -39,6 +39,7 @@ public class ShooterSystem extends Subsystem {
 	 * @param angle The desired angle to set the arm to
 	 */
 	public void setAngle(double angle) {
+		if (this.isDisabled()) return;
 		int count = (int) ((angle / 360.0) * 497 * 18);
 		System.out.println("angle count for pid: "+count+" : angle: "+angle);
 		shooterArm.setSetpoint(count);
@@ -47,6 +48,7 @@ public class ShooterSystem extends Subsystem {
 
 	@Override
 	public void execute() {
+		if (this.isDisabled()) return;
 		double left = Input.getPrimaryInstance().getLeftTrigger();
 		double right = Input.getPrimaryInstance().getRightTrigger();
 
@@ -89,7 +91,7 @@ public class ShooterSystem extends Subsystem {
 	}
 
 	public void shoot(double speed) {
-		if (Robot.getInstance().isDisabled() || isBusy) return;
+		if (Robot.getInstance().isDisabled() || this.isDisabled() || isBusy) return;
 		isBusy = true;
 		System.out.println("Firing!");
 		left.set(-speed);
@@ -115,7 +117,7 @@ public class ShooterSystem extends Subsystem {
 	}
 
 	public void pickup(double speed) {
-		if (Robot.getInstance().isDisabled() || isBusy) return;
+		if (Robot.getInstance().isDisabled() || this.isDisabled() || isBusy) return;
 		isBusy = true;
 		left.set(speed);
 		right.set(-speed);

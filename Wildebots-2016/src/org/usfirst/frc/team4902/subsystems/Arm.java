@@ -36,6 +36,9 @@ public class Arm extends Subsystem {
 
 	@Override
 	public void execute() {
+		
+		if (this.isDisabled()) return;
+		
 		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
 		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold() * SECOND_SPEED_ADJUSTMENT;
 		
