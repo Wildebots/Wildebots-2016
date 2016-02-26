@@ -18,9 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Starting point of program
  */
 public class Robot extends IterativeRobot {
-	
-	SendableChooser auto = new SendableChooser();
-	
+		
 	private static Robot instance;
 	
 	public static Robot getInstance() {
@@ -37,9 +35,7 @@ public class Robot extends IterativeRobot {
     	
     	// Disable subsystems here
     	Arm.getInstance().disable();
-    	
-    	SmartDashboard.putData("Auto", auto);
-    	
+    	    	
     	EventSystem.getInstance().addHandler(() -> {
     		noShooterLimit = true;
     	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
@@ -96,15 +92,10 @@ public class Robot extends IterativeRobot {
     volatile boolean stop = false;
         
 	public void autonomousPeriodic() {
-			if (!this.getAuto()) return;
 		while (!stop) {
 			DriveSystem.getInstance().setSpeed(0.8);
 		}
 		DriveSystem.getInstance().setSpeed(0);
-	}
-	
-	public Boolean getAuto() {
-		return Boolean.class.cast(auto.getSelected());
 	}
 	
 	public void teleopPeriodic() {
