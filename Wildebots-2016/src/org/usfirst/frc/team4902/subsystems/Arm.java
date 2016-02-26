@@ -11,10 +11,11 @@ public class Arm extends Subsystem{
 	private final double baseSegmentLength = 54.9; // cm
 	private final double secondSegmentLength = 41.9; // cm
 	
-	private final double baseStartingAngle = 20.25;
-	private final double secondStartingAngle = 69.75;
+	private final double baseStartingAngle = 20.25; // Degrees
+	private final double secondStartingAngle = 69.75; // Degrees
 	
-	private final  double SPEED_ADJUSTMENT = 0.01;
+	private final double BASE_SPEED_ADJUSTMENT = 0.4;
+	private final double SECOND_SPEED_ADJUSTMENT = 1;
 
 	private final double offset = 6.2; // cm
 	
@@ -33,20 +34,26 @@ public class Arm extends Subsystem{
 
 	@Override
 	public void execute() {
-		double baseSegmentSpeed = Input.getSecondaryInstance().getLeftYThreshold() * SPEED_ADJUSTMENT;
-		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold();
+		double baseSegmentSpeed = Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT;
+		double secondSegmentSpeed = Input.getSecondaryInstance().getRightYThreshold() * SECOND_SPEED_ADJUSTMENT;
 		
-		if (this.isInLegalPosition()){
+//		baseSegmentSpeed = Math.pow(baseSegmentSpeed, 2);
+		
+		int neg = (secondSegmentSpeed < 0) ? -1 : 1;
+		
+		secondSegmentSpeed = Math.pow(secondSegmentSpeed, 2) * neg;
+		
+//		if (this.isInLegalPosition()){
 			baseSegmentMotor.set(-baseSegmentSpeed);
 			secondSegmentMotor.set(secondSegmentSpeed);
-		}
-		
-		else {
-			System.out.println("REACHED LIMIT!");
-//			if (Input.getSecondaryInstance())
-			baseSegmentMotor.set(0);
-			secondSegmentMotor.set(0);
-		}
+//		}
+//		
+//		else {
+//			System.out.println("REACHED LIMIT!");
+////			if (Input.getSecondaryInstance())
+//			baseSegmentMotor.set(0);
+//			secondSegmentMotor.set(0);
+//		}
 	}
 	
 	public boolean isInLegalPosition(){

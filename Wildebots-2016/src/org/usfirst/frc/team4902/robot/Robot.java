@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4902.robot;
 
+import java.time.Duration;
+
 import org.usfirst.frc.team4902.robot.EventSystem.HandlerType;
 import org.usfirst.frc.team4902.subsystems.Arm;
 import org.usfirst.frc.team4902.subsystems.Camera;
@@ -56,6 +58,27 @@ public class Robot extends IterativeRobot {
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().setAngle(45);
     	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		DriveSystem.getInstance().rotate(-90);
+    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
+    	
+    	EventSystem.getInstance().addHandler(() -> {
+    		ShooterSystem.getInstance().setAngle(-80);
+    	}, Input.getSecondaryInstance().getButtonX(), HandlerType.OnPress);
+    	
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		double angle = Encoders.getInstance().getShooterAngle();
+//    		ShooterSystem.getInstance().setAngle(-80);
+//    		DriveSystem.getInstance().driveStraight(0.7);
+//    		ShooterSystem.getInstance().pickup();
+//    		MasterTimer.getInstance().schedule(() -> {
+//    			ShooterSystem.getInstance().setAngle(angle);
+//    			DriveSystem.getInstance().stopRotate();
+//    			ShooterSystem.getInstance().stopShooterMotors();
+//    		}, Duration.ofSeconds(4));
+//    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
+    	
     }
     
     public void teleopInit() {
@@ -69,7 +92,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
-//		Arm.getInstance().execute();
+		Arm.getInstance().execute();
 	}
 
 	@Override

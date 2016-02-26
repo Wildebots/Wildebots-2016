@@ -27,7 +27,7 @@ public enum PortMap {
 	RightShooter(5),
 	ArmMotor(6),
 	Kicker(7),
-	
+		
 	//TODO: Add real values
 	ArmBaseSegmentMotor(8), ArmSecondSegmentMotor(9),
 	
