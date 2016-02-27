@@ -7,9 +7,9 @@ import org.usfirst.frc.team4902.robot.MasterTimer;
 import org.usfirst.frc.team4902.robot.PortMap;
 import org.usfirst.frc.team4902.robot.Robot;
 
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.Joystick.RumbleType;
 
 public class ShooterSystem extends Subsystem {
 
@@ -19,7 +19,7 @@ public class ShooterSystem extends Subsystem {
 
 	private volatile boolean isBusy = false;
 	
-	private static final double angleThreshold = 8;
+	private static final double angleThreshold = 2;
 
 	private Victor left = new Victor(PortMap.LeftShooter.getPort()),
 			right = new Victor(PortMap.RightShooter.getPort()),
@@ -50,14 +50,14 @@ public class ShooterSystem extends Subsystem {
 				
 				if (Math.abs(diff) > angleThreshold) {
 					if (diff < 0) {
-						armMotor.set(-0.6);
+						armMotor.set(0.9);
 					} else if (diff > 0) {
-						armMotor.set(0.6);
+						armMotor.set(-0.9);
 					}
 				} else {
 					armMotor.set(0);
 					isDone = true;
-					isBusy = true;
+					isBusy = false;
 				}
 			}
 		});
