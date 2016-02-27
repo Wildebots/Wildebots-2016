@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot {
     	Camera.startCamera();
     	
     	// Disable subsystems here
-    	Arm.getInstance().disable();
     	    	
     	EventSystem.getInstance().addHandler(() -> {
     		noShooterLimit = true;
@@ -101,7 +100,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		ShooterSystem.getInstance().execute();
 		DriveSystem.getInstance().execute();
-		Arm.getInstance().execute();
+//		Arm.getInstance().execute(); // DO NOT ENABLE WITHOUT PERMISSION
+		Arm.getInstance().singleArmExecute(); // Use for single base arm
 	}
 
 	@Override

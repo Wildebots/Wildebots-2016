@@ -4,6 +4,7 @@ import org.usfirst.frc.team4902.robot.Calculations;
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
 public class Arm extends Subsystem {
@@ -32,6 +33,15 @@ public class Arm extends Subsystem {
 		
 	public static Arm getInstance(){
 		return instance;
+	}
+	
+	public void singleArmExecute() {
+		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
+		double baseAngle = Encoders.getInstance().getBaseSegmentAngle();
+		
+		if (baseAngle > 0 && baseAngle < 85) {
+			baseSegmentMotor.set(baseSegmentSpeed);
+		}
 	}
 
 	@Override

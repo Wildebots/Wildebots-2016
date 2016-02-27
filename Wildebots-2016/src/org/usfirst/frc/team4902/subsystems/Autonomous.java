@@ -1,16 +1,8 @@
 package org.usfirst.frc.team4902.subsystems;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TimerTask;
 import java.util.concurrent.Future;
-
-import javax.naming.InitialContext;
-
-import org.usfirst.frc.team4902.robot.MasterTimer;
-
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class Autonomous extends Subsystem {
 
