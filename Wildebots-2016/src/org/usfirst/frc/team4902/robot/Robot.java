@@ -10,8 +10,6 @@ import org.usfirst.frc.team4902.subsystems.Encoders;
 import org.usfirst.frc.team4902.subsystems.ShooterSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Main robot class

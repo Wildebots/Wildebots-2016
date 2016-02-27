@@ -17,13 +17,15 @@ public class ShooterSystem extends Subsystem {
 	private static ShooterSystem instance = new ShooterSystem();
 
 	private volatile boolean isBusy = false;
+	
+	private static final double angleThreshold = 8;
 
 	private Victor left = new Victor(PortMap.LeftShooter.getPort()),
 			right = new Victor(PortMap.RightShooter.getPort()),
 			kick = new Victor(PortMap.Kicker.getPort()),
 			armMotor = new Victor(PortMap.ArmMotor.getPort());
 
-	private PIDController shooterArm = new PIDController(0.1, 0.1, 0.1, Encoders.getInstance().getShooterEncoder(), armMotor); // TODO: Get actual PID values
+	private PIDController shooterArm = new PIDController(0.1, 0.1, 0.1, Encoders.getInstance().getShooterEncoder(), armMotor);
 
 	public ShooterSystem() {
 		//		shooterArm.setp
@@ -32,6 +34,34 @@ public class ShooterSystem extends Subsystem {
 
 	public static ShooterSystem getInstance(){
 		return instance;
+	}
+	
+	public void setAngleGUNVIR(double targetAngle) {
+		if (this.isDisabled() || this.isBusy) return;
+		if (targetAngle > UPPER_LIMIT || targetAngle < LOWER_LIMIT) return;
+		this.isBusy = true;
+		
+		Thread setAngleThread = new Thread(() -> {
+			boolean isDone = false;
+			while (!isDone){
+				double currentAngle  = Encoders.getInstance().getShooterAngle();
+				double diff = targetAngle - currentAngle;
+				
+				if (Math.abs(diff) > angleThreshold) {
+					if (diff < 0) {
+						armMotor.set(-0.6);
+					} else if (diff > 0) {
+						armMotor.set(0.6);
+					}
+				} else {
+					armMotor.set(0);
+					isDone = true;
+					isBusy = true;
+				}
+			}
+		});
+		setAngleThread.setDaemon(true);
+		setAngleThread.start();
 	}
 
 	/**
