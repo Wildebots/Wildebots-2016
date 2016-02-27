@@ -14,7 +14,7 @@ public class Arm extends Subsystem {
 	private final double baseStartingAngle = 14.8; //144mm and 37 mm
 	private final double secondStartingAngle = 75.2;
 
-	private final double BASE_SPEED_ADJUSTMENT = 0.4;
+	private final double BASE_SPEED_ADJUSTMENT = 0.25;
 	private final double SECOND_SPEED_ADJUSTMENT = 0.5;
 
 	private final double offset = 6.5; // cm
@@ -37,14 +37,8 @@ public class Arm extends Subsystem {
 	public void singleArmExecute() {
 		if (this.isDisabled()) return;
 		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
-		double baseAngle = Encoders.getInstance().getBaseSegmentAngle();
-		
-		System.out.println("base angle: "+baseAngle);
-		
-		
-//		if (baseAngle >= 0 && baseAngle < 85) {
-			baseSegmentMotor.set(baseSegmentSpeed);
-//		}
+
+		baseSegmentMotor.set(baseSegmentSpeed);
 	}
 
 	@Override
