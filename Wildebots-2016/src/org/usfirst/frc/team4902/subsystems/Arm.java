@@ -40,9 +40,12 @@ public class Arm extends Subsystem {
 		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
 		double baseAngle = Encoders.getInstance().getBaseSegmentAngle();
 		
-		if (baseAngle > 0 && baseAngle < 85) {	
+		System.out.println("base angle: "+baseAngle);
+		
+		
+//		if (baseAngle >= 0 && baseAngle < 85) {
 			baseSegmentMotor.set(baseSegmentSpeed);
-		}
+//		}
 	}
 
 	@Override
