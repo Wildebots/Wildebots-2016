@@ -52,13 +52,13 @@ public final class Input {
 		return stickPort+1;
 	}
 	
-	public void rumbleTime(float intensity, Duration time) {
-		this.rumble(intensity);
-		MasterTimer.getInstance().schedule(() -> this.rumble(0),time);
+	public void rumbleTime(float intensity, RumbleType type, Duration time) {
+		this.rumble(intensity, type);
+		MasterTimer.getInstance().schedule(() -> this.rumble(0, type),time);
 	}
 	
-	public void rumble(float intensity) {
-		this.stick.setRumble(RumbleType.kLeftRumble, intensity);
+	public void rumble(float intensity, RumbleType type) {
+		this.stick.setRumble(type, intensity);
 	}
 
 	public Joystick getJoystick() {

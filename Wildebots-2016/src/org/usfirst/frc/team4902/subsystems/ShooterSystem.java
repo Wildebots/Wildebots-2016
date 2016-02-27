@@ -9,6 +9,7 @@ import org.usfirst.frc.team4902.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 
 public class ShooterSystem extends Subsystem {
 
@@ -55,12 +56,12 @@ public class ShooterSystem extends Subsystem {
 		double change = left-right;
 		if (!Robot.getInstance().noShooterLimit) {
 			if (change > 0 && this.isLowerLimit()) {
-				Input.getSecondaryInstance().rumbleTime(0.4f, Duration.ofMillis(1000));
+				Input.getSecondaryInstance().rumbleTime(0.4f, RumbleType.kRightRumble, Duration.ofMillis(1000));
 				armMotor.set(-0.2);
 				return;
 			}
 			if (change < 0 && this.isUpperLimit()) {
-				Input.getSecondaryInstance().rumbleTime(0.4f, Duration.ofMillis(1000));
+				Input.getSecondaryInstance().rumbleTime(0.4f, RumbleType.kRightRumble, Duration.ofMillis(1000));
 				armMotor.set(0);
 				return;
 			}
@@ -95,8 +96,8 @@ public class ShooterSystem extends Subsystem {
 	public void shoot(double speed) {
 		if (Robot.getInstance().isDisabled() || this.isDisabled() || isBusy) return;
 		isBusy = true;
-		Input.getPrimaryInstance().rumbleTime(0.5f, Duration.ofMillis(2000));
-		Input.getSecondaryInstance().rumbleTime(0.5f, Duration.ofMillis(2000));
+		Input.getPrimaryInstance().rumbleTime(0.5f, RumbleType.kLeftRumble, Duration.ofMillis(2000));
+		Input.getSecondaryInstance().rumbleTime(0.5f, RumbleType.kLeftRumble, Duration.ofMillis(2000));
 		System.out.println("Firing!");
 		left.set(-speed);
 		right.set(speed);

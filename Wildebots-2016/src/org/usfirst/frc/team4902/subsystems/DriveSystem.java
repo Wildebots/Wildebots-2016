@@ -105,8 +105,8 @@ public class DriveSystem extends Subsystem {
 			diff = Math.toRadians(diff/2);
 			
 			int count = 0;
-			while (!Autonomous.inRange((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle(), degrees, 40)) {
-				System.out.println((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle() + " : " + degrees);
+			while (Math.abs(Gyrometer.getInstance().getAngle()) < Math.abs(angle)) {
+//				System.out.println((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle() + " : " + degrees);
 				System.out.println("ROTATTINGGGGG" + count);
 				count++;
 				drive.tankDrive(Math.sin(diff)*2.0, Math.sin(-diff)*2.0);
