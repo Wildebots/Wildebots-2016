@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
+import org.usfirst.frc.team4902.robot.Robot;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
@@ -93,28 +94,56 @@ public class DriveSystem extends Subsystem {
 		
 		Thread RotateThread = new Thread(() -> {
 			
-			isBusy = true;
+			isBusy = true;			
 			
-			double angle = Gyrometer.getInstance().getAngle();
-			double diff = degrees-(angle % 360);
+			System.out.println("Enter Rotate");
 			
-			if (diff > 180) {
-				diff = diff-360;
-			}
+//			System.out.println(Math.abs(Gyrometer.getInstance().getAngle()) + " : " + Math.abs(angle)); //Special case 0 look into
+//			while (Math.abs(Gyrometer.getInstance().getAngle()) < Math.abs(angle)) {
+//				double diff = degrees-(angle % 360);
+//				
+//				if (diff > 180) {
+//					diff = diff-360;
+//				}
+//				
+//				diff = Math.toRadians(diff/2);
+//				if (diff == 0) break;
+////				System.out.println((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle() + " : " + degrees);
+//				System.out.println("ROTATTINGGGGG" + count);
+//				count++;
+//				drive.tankDrive(Math.sin(diff)*2.0, Math.sin(-diff)*2.0);
+//			}
 			
-			diff = Math.toRadians(diff/2);
+			double diff = -1;
 			
-			int count = 0;
-			while (Math.abs(Gyrometer.getInstance().getAngle()) < Math.abs(angle)) {
-//				System.out.println((Gyrometer.getInstance().getAngle() > 360) ? Gyrometer.getInstance().getAngle()%360 : Gyrometer.getInstance().getAngle() + " : " + degrees);
-				System.out.println("ROTATTINGGGGG" + count);
-				count++;
-				drive.tankDrive(Math.sin(diff)*2.0, Math.sin(-diff)*2.0);
-			}
+			do {
+				
+				double angle = Gyrometer.getInstance().getAngle();
+				
+				diff = degrees-(angle % 360);
+				
+				if (diff > 180) {
+					diff = diff-360;
+				}
+				
+				System.out.println("Diff: "+diff + " Current: "+Gyrometer.getInstance().getAngle());
+				
+				diff = Math.toRadians(diff/2.0);
+				drive.tankDrive(Math.sin(diff)*3, Math.sin(-diff)*3);
+				if (Robot.getInstance().isDisabled()) {
+					drive.tankDrive(0, 0);
+					return;
+				}
+				
+				// TODO: Review this exit condition to work for when current angle is less that target or something
+				if (Math.abs(angle) > Math.abs(degrees)) break;
+			} while (diff != 0);
 			
 			drive.tankDrive(0, 0);
 			
 			isBusy = false;
+			
+			System.out.println("Exit Rotate");
 			
 		});
 		

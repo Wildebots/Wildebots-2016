@@ -61,6 +61,18 @@ public class Robot extends IterativeRobot {
 //    	~~ DO NOT ENABLE! (Ben, Quinton, Victor, this means you) ~~
     	
 //    	EventSystem.getInstance().addHandler(() -> {
+//    		ShooterSystem.getInstance().setAngleGUNVIR(-45);
+//    	}, Input.getSecondaryInstance().getButtonX(), HandlerType.OnPress);
+
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		ShooterSystem.getInstance().setAngleGUNVIR(0);
+//    	}, Input.getSecondaryInstance().getButtonY(), HandlerType.OnPress);
+
+//    	EventSystem.getInstance().addHandler(() -> {
+//    		DriveSystem.getInstance().rotate(45);
+//    	}, Input.getPrimaryInstance().getButtonX(), HandlerType.OnPress);
+    	
+//    	EventSystem.getInstance().addHandler(() -> {
 //    		ShooterSystem.getInstance().setAngle(-60);
 //    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
     	    	
