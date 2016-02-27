@@ -36,6 +36,7 @@ public class Arm extends Subsystem {
 	}
 	
 	public void singleArmExecute() {
+		if (this.isDisabled()) return;
 		double baseSegmentSpeed = -(Input.getSecondaryInstance().getLeftYThreshold() * BASE_SPEED_ADJUSTMENT);
 		double baseAngle = Encoders.getInstance().getBaseSegmentAngle();
 		
