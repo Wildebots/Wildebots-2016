@@ -4,7 +4,6 @@ import org.usfirst.frc.team4902.robot.Calculations;
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
 public class Arm extends Subsystem {
