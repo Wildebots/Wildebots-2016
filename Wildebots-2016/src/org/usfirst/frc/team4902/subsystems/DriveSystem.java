@@ -50,6 +50,7 @@ public class DriveSystem extends Subsystem {
 //		if (isSideLimit() && (leftY > 0 && rightY < 0)) return;
 		
 		drive.tankDrive(-leftY, -rightY);
+				
 	}
 	
 	public boolean isFrontLimit() {

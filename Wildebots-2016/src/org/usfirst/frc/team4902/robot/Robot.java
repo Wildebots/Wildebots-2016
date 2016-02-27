@@ -37,12 +37,12 @@ public class Robot extends IterativeRobot {
     	    	
     	EventSystem.getInstance().addHandler(() -> {
     		noShooterLimit = true;
-    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnPress);
+    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnPress);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		noShooterLimit = false;
     		Encoders.getInstance().resetShooterEncoder();
-    	}, Input.getPrimaryInstance().getButtonA(), HandlerType.OnRelease);
+    	}, Input.getSecondaryInstance().getButtonB(), HandlerType.OnRelease);
     	
     	EventSystem.getInstance().addHandler(() -> {
     		ShooterSystem.getInstance().shoot();
