@@ -65,7 +65,7 @@ public class ShooterSystem extends Subsystem {
 				return;
 			}
 
-			System.out.println("Angle: "+Encoders.getInstance().getShooterAngle() + " lower: "+isLowerLimit()+ " upper: "+isUpperLimit());
+//			System.out.println("Angle: "+Encoders.getInstance().getShooterAngle() + " lower: "+isLowerLimit()+ " upper: "+isUpperLimit());
 
 			armMotor.set(change);
 		} else {
