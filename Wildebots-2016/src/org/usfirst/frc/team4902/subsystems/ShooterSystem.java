@@ -55,10 +55,12 @@ public class ShooterSystem extends Subsystem {
 		double change = left-right;
 		if (!Robot.getInstance().noShooterLimit) {
 			if (change > 0 && this.isLowerLimit()) {
+				Input.getPrimaryInstance().rumbleTime(0.4f, Duration.ofMillis(1000));
 				armMotor.set(-0.2);
 				return;
 			}
 			if (change < 0 && this.isUpperLimit()) {
+				Input.getPrimaryInstance().rumbleTime(0.4f, Duration.ofMillis(1000));
 				armMotor.set(0);
 				return;
 			}
