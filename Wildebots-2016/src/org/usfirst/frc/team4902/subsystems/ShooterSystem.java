@@ -49,8 +49,8 @@ public class ShooterSystem extends Subsystem {
 	@Override
 	public void execute() {
 		if (this.isDisabled()) return;
-		double left = Input.getPrimaryInstance().getLeftTrigger();
-		double right = Input.getPrimaryInstance().getRightTrigger();
+		double left = Input.getSecondaryInstance().getLeftTrigger();
+		double right = Input.getSecondaryInstance().getRightTrigger();
 
 		double change = left-right;
 		if (!Robot.getInstance().noShooterLimit) {
