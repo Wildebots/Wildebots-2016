@@ -122,22 +122,28 @@ public class DriveSystem extends Subsystem {
 				
 				diff = degrees-(angle % 360);
 				
-				if (diff > 180) {
-					diff = diff-360;
+				if (Math.abs(diff) > 180 ) {
+					if (diff<0){
+						diff+=360;
+					}
+					else if(diff>0){
+						diff-=360;
+					}
 				}
 				
 				System.out.println("Diff: "+diff + " Current: "+Gyrometer.getInstance().getAngle());
 				
-				diff = Math.toRadians(diff/2.0);
-				drive.tankDrive(Math.sin(diff)*3, Math.sin(-diff)*3);
+				diff = Math.toRadians(diff);
+				
+				drive.tankDrive(Math.sin(diff), Math.sin(-diff));
 				if (Robot.getInstance().isDisabled()) {
 					drive.tankDrive(0, 0);
 					return;
 				}
 				
-				// TODO: Review this exit condition to work for when current angle is less that target or something
-				if (Math.abs(angle) > Math.abs(degrees)) break;
-			} while (diff != 0);
+//				// TODO: Review this exit condition to work for when current angle is less that target or something
+//				if (Math.abs(angle) > Math.abs(degrees)) break;
+			} while (Math.abs(diff)>(Math.toRadians(5)));
 			
 			drive.tankDrive(0, 0);
 			
