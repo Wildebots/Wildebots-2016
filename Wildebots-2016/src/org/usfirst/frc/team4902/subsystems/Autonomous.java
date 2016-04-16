@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Future;
 
+import javax.management.RuntimeErrorException;
+
 public class Autonomous extends Subsystem {
 
 	public static abstract class AutoAction {
@@ -80,8 +82,7 @@ public class Autonomous extends Subsystem {
 
 	@Override
 	public void log() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	private static AutoAction rotate(int deg) {

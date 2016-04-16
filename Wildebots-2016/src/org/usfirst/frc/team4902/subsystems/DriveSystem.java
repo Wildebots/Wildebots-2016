@@ -3,6 +3,8 @@ package org.usfirst.frc.team4902.subsystems;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import org.usfirst.frc.team4902.robot.Input;
 import org.usfirst.frc.team4902.robot.PortMap;
@@ -10,6 +12,7 @@ import org.usfirst.frc.team4902.robot.Robot;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSystem extends Subsystem {
 	
@@ -31,7 +34,7 @@ public class DriveSystem extends Subsystem {
 	 * A constant to tweak how quickly the robot will adjust back to straight.
 	 */
 	private final double ADJUSTMENT_SPEED_CONSTANT = 1.5;
-	private final double ADJUSTMENT_SPEED_CONSTANT_TWO = 0.01;;
+	private final double ADJUSTMENT_SPEED_CONSTANT_TWO = 0.01;
 	private double lastAngle = 0;
 	private double currentAngle = 0;
 	private double correction = 0;
@@ -44,7 +47,7 @@ public class DriveSystem extends Subsystem {
 
 	@Override
 	public void execute() {
-		if (isBusy || this.isDisabled()) return;
+		if (isBusy || this.isDisabled() || SmartDashboard.getBoolean("DB/Button 2")) return;
 		double leftY = Input.getPrimaryInstance().getLeftYThreshold(), rightY = Input.getPrimaryInstance().getRightYThreshold();
 		//TODO: Review limit constants and check logic again?
 //		if (isFrontLimit() && (leftY > 0 && rightY > 0)) return;

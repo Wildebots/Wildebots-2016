@@ -5,6 +5,7 @@ package org.usfirst.frc.team4902.robot;
  */
 public enum PortMap {
 	
+	//controller
 	primaryJoystick(0), secondaryJoystick(1),
 	
 	UltrasonicForward(0), UltrasonicSide(1),
@@ -14,6 +15,7 @@ public enum PortMap {
 	ButtonA(1), ButtonB(2), ButtonX(3), ButtonY(4),
 	LeftBumper(5), RightBumper(6),
 	
+	// digital
 	ArmBaseSegmentEncoderA(4),
 	ArmBaseSegmentEncoderB(5),
 	
@@ -23,6 +25,7 @@ public enum PortMap {
 	ShooterEncoderA(8),
 	ShooterEncoderB(9),
 	
+	//PWM
 	LeftShooter(4),
 	RightShooter(5),
 	ArmMotor(6),

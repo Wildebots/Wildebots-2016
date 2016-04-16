@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterSystem extends Subsystem {
 
-	public static final double LOWER_LIMIT = -75, UPPER_LIMIT = 0;
+	public static final double LOWER_LIMIT = -55, UPPER_LIMIT = 0;
 
 	private static ShooterSystem instance = new ShooterSystem();
 
@@ -126,7 +126,7 @@ public class ShooterSystem extends Subsystem {
 	public void shoot(double speed) {
 		if (Robot.getInstance().isDisabled() || this.isDisabled() || isBusy) return;
 		isBusy = true;
-		Input.getPrimaryInstance().rumbleTime(0.5f, RumbleType.kLeftRumble, Duration.ofMillis(2000));
+//		Input.getPrimaryInstance().rumbleTime(0.5f, RumbleType.kLeftRumble, Duration.ofMillis(2000));
 		Input.getSecondaryInstance().rumbleTime(0.5f, RumbleType.kLeftRumble, Duration.ofMillis(2000));
 		System.out.println("Firing!");
 		left.set(-speed);

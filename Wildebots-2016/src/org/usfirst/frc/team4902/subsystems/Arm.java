@@ -14,7 +14,7 @@ public class Arm extends Subsystem {
 	private final double baseStartingAngle = 14.8; //144mm and 37 mm
 	private final double secondStartingAngle = 75.2;
 
-	private final double BASE_SPEED_ADJUSTMENT = 0.25;
+	private final double BASE_SPEED_ADJUSTMENT = 2.0/3.0;
 	private final double SECOND_SPEED_ADJUSTMENT = 0.5;
 
 	private final double offset = 6.5; // cm
